@@ -1,0 +1,18 @@
+.link {
+  text-decoration: none;
+
+  .home-button {
+    background: rgb(72, 72, 151);
+    width: 200px;
+    height: 200px;
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .home-button:hover {
+    cursor: pointer;
+  }
+}
