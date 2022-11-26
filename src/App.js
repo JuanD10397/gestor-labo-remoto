@@ -11,6 +11,8 @@ import NavbarMenu from "./presentation/components/Navbar";
 // Pages
 import Home from "./presentation/pages/home";
 import Register from "./presentation/pages/register";
+import Schedule from "./presentation/pages/schedule";
+import MyLabos from "./presentation/pages/myLabos";
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/horario" element={<Schedule />} />
+          <Route path="/laboratories" element={<MyLabos />} />
         </Routes>
       </Router>
     </Provider>
