@@ -13,6 +13,7 @@ import Home from "./presentation/pages/home";
 import Register from "./presentation/pages/register";
 import Schedule from "./presentation/pages/schedule";
 import MyLabos from "./presentation/pages/myLabos";
+import LaboDescription from "./presentation/pages/laboDescription";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/horario" element={<Schedule />} />
           <Route path="/laboratories" element={<MyLabos />} />
+          <Route path="/laboratories/:laboId" element={<LaboDescription />} />
         </Routes>
       </Router>
     </Provider>

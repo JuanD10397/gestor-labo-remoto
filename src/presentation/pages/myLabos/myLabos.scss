@@ -1,0 +1,14 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 50px;
+  justify-items: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: auto auto;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: auto;
+  }
+}
