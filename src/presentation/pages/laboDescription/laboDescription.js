@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
-import CalendarModal from "../../components/CalendarModal/CalendarModal";
 import Calendar from "../../components/Calendar";
 
 import "./laboDescription.scss";
@@ -31,7 +30,6 @@ export default function LaboDescription() {
       </div>
       <Container containerType="myContainer2">
         <Calendar></Calendar>
-        <CalendarModal></CalendarModal>
       </Container>
     </Container>
   );
