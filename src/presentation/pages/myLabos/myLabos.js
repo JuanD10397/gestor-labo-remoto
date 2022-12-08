@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import Container from "../../components/Container";
 import LaboCard from "../../components/LaboCard/LaboCard";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
 

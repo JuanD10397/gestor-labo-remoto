@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
 import loggedReducer from "./loggedReducer";
+import calendarReducer from "./calendarReducer";
 
-export default combineReducers({
+const allReducers = combineReducers({
   logged: loggedReducer,
+  calendar: calendarReducer,
 });
+
+export default allReducers;

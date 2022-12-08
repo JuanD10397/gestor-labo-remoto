@@ -2,12 +2,20 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useSelector, useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
 
-export default function ScheduleModal() {
+export default function CalendarModal() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const calendar = useSelector((state) => state.calendar);
+
+  let lenCalendar = calendar.stateSchedule.length;
+
+  console.log(calendar.stateSchedule[lenCalendar - 1]);
 
   return (
     <>
@@ -20,8 +28,12 @@ export default function ScheduleModal() {
           <Modal.Title>Reserva de horario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <h3>
+            Deseas inscribirte en el horario?
+            {calendar.stateSchedule[lenCalendar - 1]}
+          </h3>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
@@ -35,7 +47,7 @@ export default function ScheduleModal() {
             >
               <Form.Label>Example textarea</Form.Label>
               <Form.Control as="textarea" rows={3} />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group className="mb-3" controlId="date">
               <Form.Label>Fecha</Form.Label>
               <Form.Control type="date" />

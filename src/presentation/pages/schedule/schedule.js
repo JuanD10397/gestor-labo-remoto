@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import Container from "../../components/Container";
 
 export default function Schedule() {
   return (
