@@ -1,5 +1,6 @@
 const initialProps = {
   stateLogged: false,
+  stateToken: "",
 };
 
 export default function (state = initialProps, action) {
@@ -7,7 +8,8 @@ export default function (state = initialProps, action) {
     case "STATE_LOGGED":
       return {
         ...state,
-        stateLogged: action.payload,
+        stateLogged: action.payload.logged,
+        stateToken: action.payload.token,
       };
     default:
       return state;

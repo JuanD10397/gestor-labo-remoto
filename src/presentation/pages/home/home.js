@@ -17,6 +17,7 @@ export default function Home() {
       </div>
 
       <Link to="/register">Registrarse</Link>
+      <Link to="/login">Login</Link>
     </Container>
   );
 }
