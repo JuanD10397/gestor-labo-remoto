@@ -1,5 +1,4 @@
 const initialProps = {
-  stateLogged: false,
   stateToken: "",
   stateUserType: "",
 };
@@ -9,7 +8,6 @@ export default function (state = initialProps, action) {
     case "STATE_LOGGED":
       return {
         ...state,
-        stateLogged: action.payload.logged,
         stateToken: action.payload.token,
         stateUserType: action.payload.type,
       };

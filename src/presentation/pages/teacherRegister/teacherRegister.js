@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import { apiUrl } from "../../../assets/utils/index";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
@@ -29,7 +30,7 @@ export default function TeacherRegister() {
         body: JSON.stringify(inputs),
       };
 
-      let res = await fetch("http://localhost:9000/teacher", config);
+      let res = await fetch(`${apiUrl}/teacher/login`, config);
       let json = await res.json();
 
       console.log("json: ", json);

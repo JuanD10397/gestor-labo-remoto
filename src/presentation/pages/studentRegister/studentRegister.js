@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
 import useFetch from "../../hooks/useFetch";
+import { apiUrl } from "../../../assets/utils/index";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
 import { useDispatch } from "react-redux";
@@ -37,7 +38,7 @@ export default function StudentRegister() {
         body: JSON.stringify(inputs),
       };
 
-      let res = await fetch("http://localhost:9000/teacher", config);
+      let res = await fetch(`${apiUrl}/student`, config);
       let json = await res.json();
 
       console.log("json: ", json);

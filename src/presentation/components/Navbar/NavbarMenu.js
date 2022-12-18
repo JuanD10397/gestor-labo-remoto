@@ -1,8 +1,17 @@
 import React from "react";
 import { Container, Navbar, Button } from "react-bootstrap";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
+import { useLocalState } from "../../hooks/useLocalStorage";
 
 export default function NavbarMenu() {
+  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [userType, setUserType] = useLocalState("", "userType");
+
+  const logOut = () => {
+    setJwt("");
+    setUserType("");
+  };
+
   return (
     <Navbar style={{ background: "#0d6efd" }}>
       <Container>
@@ -16,7 +25,9 @@ export default function NavbarMenu() {
           />
         </Navbar.Brand>
         <h2 style={{ color: "white" }}>Laboratorios Remotos UNMSM</h2>
-        <Button variant="success">Ingresar</Button>
+        <Button variant="success" onClick={logOut}>
+          Cerrar sesión
+        </Button>
       </Container>
     </Navbar>
   );

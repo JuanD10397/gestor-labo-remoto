@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { apiUrl } from "../../../assets/utils/index";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
@@ -33,7 +34,7 @@ export default function StudentLogin() {
         body: JSON.stringify(inputs),
       };
 
-      let res = await fetch("http://localhost:9000/student/login", config);
+      let res = await fetch(`${apiUrl}/student/login`, config);
       let json = await res.json();
 
       console.log("json: ", json);

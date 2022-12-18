@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { apiUrl } from "../../../assets/utils/index";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
+import { useLocalState } from "../../hooks/useLocalStorage";
 
 export default function TeacherLogin() {
   const [inputs, setInputs] = useState({});
-  //const [userLogged, setUserLogged] = useState({ logged: false, token: "" });
+
+  // Funciona como useState pero almacena y toma del localStorage
+  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [userType, setUserType] = useLocalState("", "userType");
 
   // inicializacion dispatch
   const dispatch = useDispatch();
@@ -36,26 +41,28 @@ export default function TeacherLogin() {
         body: JSON.stringify(inputs),
       };
 
-      let res = await fetch("http://localhost:9000/teacher/login", config);
+      let res = await fetch(`${apiUrl}/teacher/login`, config);
       let json = await res.json();
 
       console.log("json: ", json);
-      // const teacherToken = json[Object.keys(json)[1]];
-      const teacherToken = json.token;
-
-      //setUserLogged({ logged: true, token: teacherToken });
-      dispatch(
-        logginLoggoutAction({
-          logged: true,
-          token: teacherToken,
-          type: "teacher",
-        })
-      );
-      console.log("teacherToken: ", teacherToken);
+      setJwt(json.token);
+      setUserType("teacher");
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (jwt) {
+      console.log("jwt: ", jwt);
+      dispatch(
+        logginLoggoutAction({
+          token: jwt,
+          type: userType,
+        })
+      );
+    }
+  }, [jwt]);
 
   return (
     <>
