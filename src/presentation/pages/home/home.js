@@ -6,7 +6,7 @@ import HomeButton from "../../components/HomeButton";
 
 import "./home.scss";
 
-export default function Home() {
+export default function HomeMenu() {
   return (
     <Container>
       <h1>Home</h1>

@@ -1,21 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
-import useFetch from "../../hooks/useFetch";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
-import { useDispatch } from "react-redux";
 
-export default function Register() {
+export default function TeacherLogin() {
   const [inputs, setInputs] = useState({});
-  const [userLogged, setUserLogged] = useState({ logged: false, token: "" });
+  //const [userLogged, setUserLogged] = useState({ logged: false, token: "" });
 
   // inicializacion dispatch
   const dispatch = useDispatch();
-  // const logginUser = (state) => dispatch(logginLoggoutAction(state));
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -37,47 +36,32 @@ export default function Register() {
         body: JSON.stringify(inputs),
       };
 
-      let res = await fetch("http://localhost:9000/teacher", config);
+      let res = await fetch("http://localhost:9000/teacher/login", config);
       let json = await res.json();
 
       console.log("json: ", json);
-      const teacherToken = json[Object.keys(json)[0]];
+      // const teacherToken = json[Object.keys(json)[1]];
+      const teacherToken = json.token;
 
-      setUserLogged({ logged: true, token: teacherToken });
-      dispatch(logginLoggoutAction({ logged: true, token: teacherToken }));
-      console.log(teacherToken);
+      //setUserLogged({ logged: true, token: teacherToken });
+      dispatch(
+        logginLoggoutAction({
+          logged: true,
+          token: teacherToken,
+          type: "teacher",
+        })
+      );
+      console.log("teacherToken: ", teacherToken);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const estado = () => {
-    console.log(userLogged);
-  };
-
-  const updateLoggin = (userLogged) => {
-    dispatch(logginLoggoutAction(userLogged));
-  };
-
   return (
     <>
       <Container>
-        <h1>Registro de docente</h1>
+        <h1>Inicio de sesión docente</h1>
         <form onSubmit={handleSubmit}>
-          <InputText
-            type="text"
-            title="Nombres"
-            name="name"
-            value={inputs.name || ""}
-            onChange={handleChange}
-          />
-          <InputText
-            type="text"
-            title="Apellidos"
-            name="lastname"
-            value={inputs.lastname || ""}
-            onChange={handleChange}
-          />
           <InputText
             type="email"
             title="Correo"
@@ -93,12 +77,11 @@ export default function Register() {
             onChange={handleChange}
           />
           <Button variant="success" type="submit">
-            Registrar
+            Ingresar
           </Button>
         </form>
-        <Button onClick={estado}>Estado</Button>
-        <Button onClick={updateLoggin}>Log</Button>
       </Container>
+      <Link to="/teacherRegister">Crear cuenta</Link>
     </>
   );
 }
