@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import Container from "../../components/Container";
+import Calendar from "../../components/Calendar";
 
 import { useSelector } from "react-redux";
 import { increment } from "../../../domain/actions/counterAction";
@@ -15,6 +16,7 @@ export default function Schedule() {
     <Container>
       <h1>Counter {counter}</h1>
       <Button onClick={() => dispatch(increment())}>Registrar</Button>
+      <Calendar></Calendar>
     </Container>
   );
 }

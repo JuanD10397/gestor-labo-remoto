@@ -1,11 +1,15 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+import { useLocalState } from "../../hooks/useLocalStorage";
 
 import "./LaboCard.scss";
 
 function LaboCard(props) {
   const { laboId, title, description, image } = props;
+
+  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [userType, setUserType] = useLocalState("", "userType");
 
   return (
     <Card className="laboCard">
@@ -14,9 +18,17 @@ function LaboCard(props) {
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
         <div>Labo ID {laboId}</div>
-        <Link to={`/laboratories/${laboId}`}>
-          <Button variant="primary">Entrar</Button>
-        </Link>
+        {userType === "teacher" ? (
+          <Link to={`/laboratories/${laboId}`}>
+            <Button variant="primary">Entrar</Button>
+          </Link>
+        ) : (
+          userType === "student" && (
+            <Link to={`/laboratories/${laboId}`}>
+              <Button variant="primary">Entrar</Button>
+            </Link>
+          )
+        )}
       </Card.Body>
     </Card>
   );

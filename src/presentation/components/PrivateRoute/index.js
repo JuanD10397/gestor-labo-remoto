@@ -2,12 +2,12 @@ import React from "react";
 import { useLocalState } from "../../hooks/useLocalStorage";
 import { Navigate } from "react-router-dom";
 
-const PrivateRouteTeacher = ({ children }) => {
+const PrivateRoute = ({ children }) => {
   //const jwt = useSelector((state) => state.logged);
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
 
-  return jwt && userType === "teacher" ? children : <Navigate to="/" />;
+  return !jwt ? <Navigate to="/" /> : children;
 };
 
-export default PrivateRouteTeacher;
+export default PrivateRoute;

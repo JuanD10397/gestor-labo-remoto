@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { apiUrl } from "../../../assets/utils/index";
 
@@ -9,9 +9,17 @@ import InputText from "../../components/InputText";
 import Container from "../../components/Container";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
+import { useLocalState } from "../../hooks/useLocalStorage";
 
 export default function StudentLogin() {
   const [inputs, setInputs] = useState({});
+  // Funciona como useState pero almacena y toma del localStorage
+  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [userType, setUserType] = useLocalState("", "userType");
+
+  const navigate = useNavigate();
+
+  // inicializacion dispatch
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -38,16 +46,15 @@ export default function StudentLogin() {
       let json = await res.json();
 
       console.log("json: ", json);
-      const studentToken = json.token;
+      setJwt(json.token);
+      setUserType("student");
 
       dispatch(
         logginLoggoutAction({
-          logged: true,
-          token: studentToken,
-          type: "student",
+          token: jwt,
+          type: userType,
         })
       );
-      console.log("studentToken: ", studentToken);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +79,11 @@ export default function StudentLogin() {
             value={inputs.password || ""}
             onChange={handleChange}
           />
-          <Button variant="success" type="submit">
+          <Button
+            variant="success"
+            type="submit"
+            // onClick={() => navigate("/home")}
+          >
             Ingresar
           </Button>
         </form>

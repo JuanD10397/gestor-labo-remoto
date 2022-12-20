@@ -6,16 +6,16 @@ import NavbarMenu from "./presentation/components/Navbar";
 
 // Pages
 import Start from "./presentation/pages/start";
-import HomeMenu from "./presentation/pages/home";
+import Home from "./presentation/pages/home/home";
 import TeacherRegister from "./presentation/pages/teacherRegister/teacherRegister";
 import StudentRegister from "./presentation/pages/studentRegister/studentRegister";
 import TeacherLogin from "./presentation/pages/teacherLogin/teacherLogin";
 import StudentLogin from "./presentation/pages/studentLogin/studentLogin";
 import Schedule from "./presentation/pages/schedule";
 import MyLabos from "./presentation/pages/myLabos";
-import LaboDescription from "./presentation/pages/laboDescription";
-import PrivateRouteTeacher from "./presentation/components/PrivateRouteTeacher";
-import PrivateRouteStudent from "./presentation/components/PrivateRouteStudent";
+import LaboDescription from "./presentation/pages/laboDescription/laboDescription";
+import PrivateRoute from "./presentation/components/PrivateRoute";
+import TeacherCreateLabo from "./presentation/pages/teacherCreateLabo/teacherCreateLabo";
 
 export default function App() {
   return (
@@ -23,14 +23,7 @@ export default function App() {
       <NavbarMenu />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route
-          path="/home"
-          element={
-            <PrivateRouteTeacher>
-              <HomeMenu />
-            </PrivateRouteTeacher>
-          }
-        />
+
         <Route path="/teacherRegister" element={<TeacherRegister />} />
         <Route path="/studentRegister" element={<StudentRegister />} />
         <Route path="/teacherLogin" element={<TeacherLogin />} />
@@ -38,27 +31,67 @@ export default function App() {
         <Route
           path="/horario"
           element={
-            <PrivateRouteTeacher>
+            <PrivateRoute>
               <Schedule />
-            </PrivateRouteTeacher>
+            </PrivateRoute>
           }
         />
         <Route
-          path="/laboratories"
+          path="/home"
           element={
-            <PrivateRouteTeacher>
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/createlabo/"
+          element={
+            <PrivateRoute>
+              <TeacherCreateLabo />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/laboratories/"
+          element={
+            <PrivateRoute>
               <MyLabos />
-            </PrivateRouteTeacher>
+            </PrivateRoute>
           }
         />
         <Route
           path="/laboratories/:laboId"
           element={
-            <PrivateRouteTeacher>
+            <PrivateRoute>
               <LaboDescription />
-            </PrivateRouteTeacher>
+            </PrivateRoute>
           }
         />
+        <Route
+          path="/laboratories"
+          element={
+            <PrivateRoute>
+              <MyLabos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/schedule"
+          element={
+            <PrivateRoute>
+              <Schedule />
+            </PrivateRoute>
+          }
+        ></Route>
+        {/* <Route
+          path="/laboratories/:laboId"
+          element={
+            <PrivateRoute>
+              <LaboDescription />
+            </PrivateRoute>
+          }
+        /> */}
       </Routes>
     </Router>
   );
