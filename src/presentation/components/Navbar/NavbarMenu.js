@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Navbar, Button } from "react-bootstrap";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
-import { useLocalState } from "../../hooks/useLocalStorage";
+import { useLocalState } from "../../hooks/useLocalState";
 
 export default function NavbarMenu() {
   const [jwt, setJwt] = useLocalState("", "jwt");

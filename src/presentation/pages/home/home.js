@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Container from "../../components/Container";
-import { useLocalState } from "../../hooks/useLocalStorage";
+import { useLocalState } from "../../hooks/useLocalState";
 
 import HomeButton from "../../components/HomeButton";
 

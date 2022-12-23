@@ -3,13 +3,12 @@ import { Button } from "react-bootstrap";
 import Container from "../../components/Container";
 import InputText from "../../components/InputText";
 import { useState } from "react";
-// import { apiUrl } from "../../../assets/utils/index";
-// import { useSelector } from "react-redux";
-// import { increment } from "../../../domain/actions/counterAction";
-// import { useDispatch } from "react-redux";
 import TextArea from "../../components/TextArea/TextArea";
+import { useLocalState } from "../../hooks/useLocalState";
+import { apiUrl } from "../../../assets/utils/index";
 
 export default function TeacherCreateLabo() {
+  const [jwt, setJwt] = useLocalState("", "jwt");
   const [inputs, setInputs] = useState({});
 
   const handleChange = (event) => {
@@ -18,53 +17,58 @@ export default function TeacherCreateLabo() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmitCreateLabo = async (event) => {
     event.preventDefault();
-    console.log(inputs);
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(inputs),
+      };
 
-    // try {
-    //   let config = {
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(inputs),
-    //   };
+      let res = await fetch(`${apiUrl}/teacher/lab`, config);
+      let json = await res.json();
 
-    //   let res = await fetch(`${apiUrl}/teacher/login`, config);
-    //   let json = await res.json();
-
-    //   console.log("json: ", json);
-    //   // const teacherToken = json[Object.keys(json)[0]];
-
-    //   // console.log(teacherToken);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      console.log("json: ", json);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <Container>
-      <h1>Crear Laboratorio</h1>
-      <form onSubmit={handleSubmit}>
-        <InputText
-          type="text"
-          title="Título"
-          name="title"
-          value={inputs.title || ""}
-          onChange={handleChange}
-        />
-        <TextArea
-          title="Descripción"
-          name="description"
-          value={inputs.description || ""}
-          onChange={handleChange}
-        />
-        <Button variant="success" type="submit">
-          Crear
-        </Button>
-      </form>
-    </Container>
+    <>
+      <Container>
+        <h1>Crear Laboratorio</h1>
+        <form onSubmit={handleSubmitCreateLabo}>
+          <InputText
+            type="text"
+            title="Título"
+            name="labTitle"
+            value={inputs.labTitle || ""}
+            onChange={handleChange}
+          />
+          <InputText
+            type="text"
+            title="Descripción corta"
+            name="labDescShort"
+            value={inputs.labDescShort || ""}
+            onChange={handleChange}
+          />
+          <TextArea
+            title="Descripción"
+            name="labDescription"
+            value={inputs.labDescription || ""}
+            onChange={handleChange}
+          />
+          <Button variant="success" type="submit">
+            Crear
+          </Button>
+        </form>
+      </Container>
+    </>
   );
 }

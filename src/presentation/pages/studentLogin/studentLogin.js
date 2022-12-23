@@ -9,7 +9,7 @@ import InputText from "../../components/InputText";
 import Container from "../../components/Container";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
-import { useLocalState } from "../../hooks/useLocalStorage";
+import { useLocalState } from "../../hooks/useLocalState";
 
 export default function StudentLogin() {
   const [inputs, setInputs] = useState({});

@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import { useLocalState } from "../../hooks/useLocalStorage";
+import { useLocalState } from "../../hooks/useLocalState";
 
 import "./LaboCard.scss";
 
