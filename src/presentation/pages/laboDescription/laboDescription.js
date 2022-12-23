@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import Calendar from "../../components/Calendar";
-import { useState } from "react";
 import { Button } from "react-bootstrap";
 import InputText from "../../components/InputText";
 import { useLocalState } from "../../hooks/useLocalStorage";
-
-import "./laboDescription.scss";
+import { apiUrl } from "../../../assets/utils/index";
 
 export default function LaboDescription() {
   const { laboId } = useParams();
 
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
+  const [labo, setLabo] = useState({});
 
   const [inputs, setInputs] = useState({});
   // const dispatch = useDispatch();
@@ -27,47 +26,36 @@ export default function LaboDescription() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
-
-    // try {
-    //   let config = {
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(inputs),
-    //   };
-
-    // let res = await fetch(`${apiUrl}/student/login`, config);
-    // let json = await res.json();
-
-    // console.log("json: ", json);
-
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
+
+  async function getLabo() {
+    let config = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(`${apiUrl}/lab/?labId=${laboId}`, config);
+    const data = await response.json();
+    console.log(data.labs[1]); //AQUI DEBO MODIFICAR DEPENDIENDO DEL ID QUE ME DEVUELVA EL API
+    setLabo(data.labs[1]);
+    //setLoading(false);
+  }
+
+  useEffect(() => {
+    getLabo();
+  }, []);
 
   return (
     <>
       <Container>
-        <h1>Description Labo</h1>
+        <h1>{labo.lab_title}</h1>
         <div>Labo numero {laboId}</div>
+        <div>{labo.lab_description}</div>
         <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum
+          Tiempo de duración de la práctica de Laboratorio:{" "}
+          <b>{labo.lab_timeNeeded}</b>
         </div>
       </Container>
       {userType === "teacher" ? (

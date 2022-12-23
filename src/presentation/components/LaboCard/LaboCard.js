@@ -18,7 +18,7 @@ function LaboCard(props) {
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
         <div>Labo ID {laboId}</div>
-        {userType === "teacher" ? (
+        {/* {userType === "teacher" ? (
           <Link to={`/laboratories/${laboId}`}>
             <Button variant="primary">Entrar</Button>
           </Link>
@@ -28,7 +28,10 @@ function LaboCard(props) {
               <Button variant="primary">Entrar</Button>
             </Link>
           )
-        )}
+        )} */}
+        <Link to={`/laboratories/${laboId}`}>
+          <Button variant="primary">Entrar</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
