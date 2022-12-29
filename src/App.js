@@ -16,6 +16,8 @@ import MyLabos from "./presentation/pages/myLabos";
 import LaboDescription from "./presentation/pages/laboDescription/laboDescription";
 import PrivateRoute from "./presentation/components/PrivateRoute";
 import TeacherCreateLabo from "./presentation/pages/teacherCreateLabo/teacherCreateLabo";
+import PasswordMyLabos from "./presentation/pages/passwordMyLabos/passwordMyLabos";
+import PasswordLabo from "./presentation/pages/passwordLabo/passwordLabo";
 
 export default function App() {
   return (
@@ -69,29 +71,29 @@ export default function App() {
           }
         />
         <Route
-          path="/laboratories"
-          element={
-            <PrivateRoute>
-              <MyLabos />
-            </PrivateRoute>
-          }
-        />
-        <Route
           path="/schedule"
           element={
             <PrivateRoute>
               <Schedule />
             </PrivateRoute>
           }
-        ></Route>
-        {/* <Route
-          path="/laboratories/:laboId"
+        />
+        <Route
+          path="/passwordlabo"
           element={
             <PrivateRoute>
-              <LaboDescription />
+              <PasswordMyLabos />
             </PrivateRoute>
           }
-        /> */}
+        />
+        <Route
+          path="/passwordlabo/:laboId"
+          element={
+            <PrivateRoute>
+              <PasswordLabo />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

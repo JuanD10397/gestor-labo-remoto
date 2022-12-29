@@ -5,9 +5,9 @@ import LogoUnmsm from "../../../assets/img/unmsm.png";
 import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
 
-import "./myLabos.scss";
+import "./passwordMyLabos.scss";
 
-export default function MyLabos() {
+export default function PasswordMyLabos() {
   // DATA MOCK
 
   // const [labos, setLabos] = useState([
@@ -67,7 +67,7 @@ export default function MyLabos() {
 
   return (
     <Container fluid="xl">
-      <h1>Mis Laboratorios</h1>
+      <h1>Solicitar contraseña de Rustdesk</h1>
       <div className="grid-container">
         {loading ? (
           <>Cargando...</>
@@ -80,8 +80,8 @@ export default function MyLabos() {
                 title={labo.lab_title}
                 image={LogoUnmsm}
                 description={labo.lab_desc_short}
-                link="/laboratories/"
-                btnTxt="Entrar"
+                link="/passwordlabo/"
+                btnTxt="Mostrar contraseña"
               />
             );
           })

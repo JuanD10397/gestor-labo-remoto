@@ -25,14 +25,11 @@ export default function Home() {
         userType === "student" && (
           <div className="home-container">
             <HomeButton route="/laboratories">Mis Laboratorios</HomeButton>
-            <HomeButton route="/laboratories">Empezar Laboratorio</HomeButton>
+            <HomeButton route="/passwordlabo">Empezar Laboratorio</HomeButton>
             <HomeButton route="/schedule">Horario</HomeButton>
           </div>
         )
       )}
-
-      <Link to="/register">Registrarse</Link>
-      <Link to="/login">Login</Link>
     </Container>
   );
 }
