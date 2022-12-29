@@ -14,8 +14,9 @@ export default function Schedule() {
 
   return (
     <Container>
-      <h1>Counter {counter}</h1>
-      <Button onClick={() => dispatch(increment())}>Registrar</Button>
+      {/* ESTO ES UN COUNTER DE EJEMPLO PARA ENTENDER REDUX */}
+      {/* <h1>Counter {counter}</h1> */}
+      {/* <Button onClick={() => dispatch(increment())}>Registrar</Button> */}
       <Calendar></Calendar>
     </Container>
   );

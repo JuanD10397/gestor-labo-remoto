@@ -3,6 +3,7 @@ import Container from "../../components/Container";
 import LaboCard from "../../components/LaboCard/LaboCard";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
 import { apiUrl } from "../../../assets/utils/index";
+import { useLocalState } from "../../hooks/useLocalState";
 
 import "./myLabos.scss";
 
@@ -38,16 +39,21 @@ export default function MyLabos() {
 
   // console.log("labos:", labos);
 
+  const [jwt] = useLocalState("", "jwt");
+  const [userType, setUserType] = useLocalState("", "userType");
+
   const [labos, setLabos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function getLabos() {
     let config = {
-      method: "GET",
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
       },
+      body: JSON.stringify({ type: userType }),
     };
     const response = await fetch(`${apiUrl}/lab`, config);
     const data = await response.json();

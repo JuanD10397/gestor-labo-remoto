@@ -2,10 +2,17 @@ import ScheduleSelector from "react-schedule-selector";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import CalendarModal from "../CalendarModal/CalendarModal";
+import { apiUrl } from "../../../assets/utils/index";
+import { useLocalState } from "../../hooks/useLocalState";
+import { useDispatch } from "react-redux";
+import { registerScheduleAction } from "../../../domain/actions/calendarActions";
 // import { es } from "date-fns/locale";
 
-export default function Calendar() {
-  const calendar = useSelector((state) => state.calendar);
+export default function Calendar(props) {
+  const { laboId } = props;
+  const dispatch = useDispatch();
+
+  //const calendar = useSelector((state) => state.calendar); ////////////////////////////////////////////////////// DESCOMENTAR
 
   // console.log(calendar.stateSchedule);
 
@@ -13,11 +20,13 @@ export default function Calendar() {
   const [oldSchedule, setOldSchedule] = useState([]);
   // const [chosenSchedule, setChosenSchedule] = useState("");
 
-  useEffect(() => {
-    //Runs only on the first render
-    setSchedule(calendar.stateSchedule);
-    setOldSchedule(calendar.stateSchedule);
-  }, []);
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////// DESCOMENTAR
+  // useEffect(() => {
+  //   //Runs only on the first render
+  //   setSchedule(calendar.stateSchedule);
+  //   setOldSchedule(calendar.stateSchedule);
+  // }, []);
+  ///////////////////////////////////////////////////////
 
   const handleChange = (newSchedule) => {
     // console.log("schedule: ", schedule);
@@ -49,6 +58,40 @@ export default function Calendar() {
     }
   };
 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const [jwt] = useLocalState("", "jwt");
+  const [userType, setUserType] = useLocalState("", "userType");
+
+  async function getSchedule() {
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({ lab: laboId }),
+    };
+    const response = await fetch(`${apiUrl}/lab/schedules`, config);
+    const data = await response.json();
+    //console.log(data.schedules[0].sch_start);
+    let scheduleArray = [];
+    for (let i = 0; i < data.schedules.length; i++) {
+      //console.log(data.schedules[i].sch_start);
+      scheduleArray.push(data.schedules[i].sch_start);
+    }
+
+    setSchedule(scheduleArray);
+
+    //setLoading(false);
+  }
+
+  useEffect(() => {
+    getSchedule();
+    //dispatch(registerScheduleAction(schedule));
+  }, []);
+
   return (
     <div>
       <ScheduleSelector
@@ -58,9 +101,9 @@ export default function Calendar() {
         maxTime={24}
         hourlyChunks={1}
         dateFormat="ddd D/M"
-        onChange={handleChange}
+        // onChange={handleChange}
       />
-      <CalendarModal scheduleSelected={schedule}></CalendarModal>
+      {/* <CalendarModal scheduleSelected={schedule}></CalendarModal> */}
     </div>
   );
 }

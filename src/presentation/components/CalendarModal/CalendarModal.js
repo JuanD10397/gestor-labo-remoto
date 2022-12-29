@@ -2,19 +2,49 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 // import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import InputText from "../../components/InputText";
 import { useDispatch } from "react-redux";
 import { registerScheduleAction } from "../../../domain/actions/calendarActions";
+import { apiUrl } from "../../../assets/utils/index";
+import { useLocalState } from "../../hooks/useLocalState";
 
 export default function CalendarModal(props) {
+  const { scheduleSelected, laboId } = props;
+
   const dispatch = useDispatch();
+  const [jwt, setJwt] = useLocalState("", "jwt");
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { scheduleSelected } = props;
-
   // Corto la string del schedule para pintarla más entendible en pantalla
-  let date = scheduleSelected[scheduleSelected?.length - 1]?.substring(0, 21);
+  // let date = scheduleSelected[scheduleSelected?.length - 1]?.substring(0, 21);
+  // console.log(scheduleSelected);
+  console.log(laboId);
+
+  let date = scheduleSelected.toString().substring(0, 21);
+
+  const handleSubmitRegisterSchedule = async (event) => {
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({ start: scheduleSelected, lab: laboId }),
+      };
+
+      let res = await fetch(`${apiUrl}/student/addSchedule`, config);
+      let json = await res.json();
+
+      console.log("json: ", json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -29,16 +59,6 @@ export default function CalendarModal(props) {
         <Modal.Body>
           <h4>Deseas inscribirte en el horario?</h4>
           <p>{date}</p>
-          {/* <Form>
-            <Form.Group className="mb-3" controlId="date">
-              <Form.Label>Fecha</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="startTime">
-              <Form.Label>Hora</Form.Label>
-              <Form.Control type="time" />
-            </Form.Group>
-          </Form> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -46,7 +66,11 @@ export default function CalendarModal(props) {
           </Button>
           <Button
             variant="primary"
-            onClick={() => dispatch(registerScheduleAction(scheduleSelected))}
+            onClick={() => {
+              dispatch(registerScheduleAction(scheduleSelected));
+              handleSubmitRegisterSchedule();
+              handleClose();
+            }}
           >
             Registrar
           </Button>

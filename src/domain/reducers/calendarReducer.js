@@ -1,8 +1,9 @@
 const initialProps = {
-  stateSchedule: [
-    "Tue Dec 20 2022 00:00:00 GMT-0500 (Peru Standard Time)",
-    "Tue Dec 20 2022 02:00:00 GMT-0500 (Peru Standard Time)",
-  ],
+  // stateSchedule: [
+  //   "Tue Dec 29 2022 00:00:00 GMT-0500 (Peru Standard Time)",
+  //   "Tue Dec 30 2022 02:00:00 GMT-0500 (Peru Standard Time)",
+  // ],
+  stateSchedule: [],
 };
 
 export default function (state = initialProps, action) {
