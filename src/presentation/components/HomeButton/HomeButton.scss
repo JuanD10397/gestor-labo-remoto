@@ -1,19 +1,47 @@
 .link {
   text-decoration: none;
-
-  .home-button {
-    background: rgb(72, 72, 151);
-    width: 200px;
-    height: 200px;
-    color: #fff;
-    border-radius: 10%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .home-button:hover {
-    cursor: pointer;
-  }
 }
+
+.home-button {
+  width: 200px;
+  height: 200px;
+  color: #fff;
+  font-weight: 600;
+  font-size: large;
+  border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  position: relative;
+  isolation: isolate;
+}
+
+.home-button:after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(72, 72, 151);  
+  border-radius: 10%;
+  opacity: 1;
+}
+
+.home-button:hover:after{
+  transition: opacity 1s;  
+  opacity: 0;
+}
+
+.home-button:hover {
+  cursor: pointer;
+}
+
+.home-button-teacher{
+  background-image: url("profesor.webp");
+}
+
+.home-button-student{
+  background-image: url("estudiante.jpg");
+}
+
+
