@@ -1,10 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
-import useFetch from "../../hooks/useFetch";
 import { apiUrl } from "../../../assets/utils/index";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
@@ -12,10 +11,19 @@ import { useDispatch } from "react-redux";
 
 export default function StudentRegister() {
   const [inputs, setInputs] = useState({});
-  const [userLogged, setUserLogged] = useState({ logged: false, token: "" });
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
-  // inicializacion dispatch
-  const dispatch = useDispatch();
+  const navigate = useNavigate(); // para redireccionar
+
+  useEffect(() => {
+    if (registerSuccess) {
+      setRegisterSuccess(false);
+      navigate("/studentLogin");
+    }
+  }, [registerSuccess]);
+
+  // // inicializacion dispatch
+  // const dispatch = useDispatch();
   // const logginUser = (state) => dispatch(logginLoggoutAction(state));
 
   const handleChange = (event) => {
@@ -43,21 +51,13 @@ export default function StudentRegister() {
 
       console.log("json: ", json);
       const studentToken = json[Object.keys(json)[0]];
+      setRegisterSuccess(true);
 
-      setUserLogged({ logged: true, token: studentToken });
-      dispatch(logginLoggoutAction({ logged: true, token: studentToken }));
+      // dispatch(logginLoggoutAction({ logged: true, token: studentToken }));
       console.log(studentToken);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const estado = () => {
-    console.log(userLogged);
-  };
-
-  const updateLoggin = (userLogged) => {
-    dispatch(logginLoggoutAction(userLogged));
   };
 
   return (
@@ -97,8 +97,6 @@ export default function StudentRegister() {
             Registrar
           </Button>
         </form>
-        <Button onClick={estado}>Estado</Button>
-        <Button onClick={updateLoggin}>Log</Button>
       </Container>
     </>
   );

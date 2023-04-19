@@ -1,14 +1,26 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { apiUrl } from "../../../assets/utils/index";
+import { useNavigate } from "react-router-dom";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
-import useFetch from "../../hooks/useFetch";
+import { apiUrl } from "../../../assets/utils/index";
+
+import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
+import { useDispatch } from "react-redux";
 
 export default function TeacherRegister() {
   const [inputs, setInputs] = useState({});
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+
+  const navigate = useNavigate(); // para redireccionar
+
+  useEffect(() => {
+    if (registerSuccess) {
+      setRegisterSuccess(false);
+      navigate("/teacherLogin");
+    }
+  }, [registerSuccess]);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -30,13 +42,14 @@ export default function TeacherRegister() {
         body: JSON.stringify(inputs),
       };
 
-      let res = await fetch(`${apiUrl}/teacher/login`, config);
+      let res = await fetch(`${apiUrl}/teacher`, config);
       let json = await res.json();
 
       console.log("json: ", json);
-      // const teacherToken = json[Object.keys(json)[0]];
+      const teacherToken = json[Object.keys(json)[0]];
+      setRegisterSuccess(true);
 
-      // console.log(teacherToken);
+      console.log(teacherToken);
     } catch (error) {
       console.log(error);
     }
