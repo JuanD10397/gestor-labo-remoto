@@ -2,15 +2,28 @@ import React from "react";
 import { Container, Navbar, Button } from "react-bootstrap";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
 import { useLocalState } from "../../hooks/useLocalState";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NavbarMenu() {
+  // Guardar datos en el localStorage y a la vez crear como un useState
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
 
+  const navigate = useNavigate(); // para redireccionar
+
+  // Cierre de sesión
   const logOut = () => {
     setJwt("");
     setUserType("");
   };
+
+  // Redirecciona a patalla de inicio al cerrar sesión
+  useEffect(() => {
+    if (!jwt && !userType) {
+      navigate("/");
+    }
+  }, [jwt, userType]);
 
   return (
     <Navbar style={{ background: "#0d6efd" }}>

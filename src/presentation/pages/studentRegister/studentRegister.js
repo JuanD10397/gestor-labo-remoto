@@ -42,11 +42,11 @@ export default function StudentRegister() {
       let json = await res.json();
 
       console.log("json: ", json);
-      const teacherToken = json[Object.keys(json)[0]];
+      const studentToken = json[Object.keys(json)[0]];
 
-      setUserLogged({ logged: true, token: teacherToken });
-      dispatch(logginLoggoutAction({ logged: true, token: teacherToken }));
-      console.log(teacherToken);
+      setUserLogged({ logged: true, token: studentToken });
+      dispatch(logginLoggoutAction({ logged: true, token: studentToken }));
+      console.log(studentToken);
     } catch (error) {
       console.log(error);
     }

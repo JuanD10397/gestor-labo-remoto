@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -13,12 +12,22 @@ import { useLocalState } from "../../hooks/useLocalState";
 
 export default function TeacherLogin() {
   const [inputs, setInputs] = useState({});
+  const [isLogged, setIsLogged] = useState(false);
 
   // Funciona como useState pero almacena y toma del localStorage
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // para redireccionar
+
+  // Al iniciar sesión redirecciona a patalla de Home
+  useEffect(() => {
+    if (isLogged && jwt) {
+      setIsLogged(false);
+      navigate("/home");
+      navigate(0); // Esto hace un reload de la página (resuelve un error que tenía al cerrar sesión)
+    }
+  }, [jwt]);
 
   // inicializacion dispatch
   const dispatch = useDispatch();
@@ -49,22 +58,18 @@ export default function TeacherLogin() {
       console.log("json: ", json);
       setJwt(json.token);
       setUserType("teacher");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      setIsLogged(true);
 
-  useEffect(() => {
-    if (jwt) {
-      console.log("jwt: ", jwt);
       dispatch(
         logginLoggoutAction({
           token: jwt,
           type: userType,
         })
       );
+    } catch (error) {
+      console.log(error);
     }
-  }, [jwt]);
+  };
 
   return (
     <>

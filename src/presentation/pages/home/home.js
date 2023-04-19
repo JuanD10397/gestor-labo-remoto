@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
 
@@ -10,6 +9,7 @@ import "./home.scss";
 export default function Home() {
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
+
   return (
     <Container>
       <h1>Home</h1>
