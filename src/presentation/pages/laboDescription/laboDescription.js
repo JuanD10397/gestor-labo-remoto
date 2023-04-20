@@ -17,13 +17,8 @@ export default function LaboDescription() {
   const [loading, setLoading] = useState(true);
   const [inputs, setInputs] = useState({});
   const [scheduleSelected, setScheduleSelected] = useState(Date());
+  const [isModalActive, setIsModalActive] = useState(false);
   // const dispatch = useDispatch();
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
 
   // GET LABO by ID
   async function getLabo() {
@@ -45,14 +40,19 @@ export default function LaboDescription() {
   // La función getLabo() solo se ejecuta una vez, al cargar la página
   useEffect(() => {
     getLabo();
+    // Esta línea de setInputs agrega el laboId a inputs. Eso es lo que debo enviar en el body al API
+    setInputs((values) => ({ ...values, labId: laboId }));
   }, []);
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   // DOCENTE AñADE ESTUDIANTE
   const handleSubmitAddStudent = async (event) => {
     event.preventDefault();
-
-    // Esta línea de setInputs agrega el laboId a inputs. Eso es lo que debo enviar en el body al API
-    setInputs((values) => ({ ...values, labId: laboId }));
 
     try {
       let config = {
@@ -83,7 +83,7 @@ export default function LaboDescription() {
       //console.log(inputs);
 
       //En Date, month va de 0 a 11. Por eso le resto 1 (si el usuario coloca 12 yo lo transformo en 11 que es diciembre)
-      let date = new Date(2022, inputs.month - 1, inputs.day, inputs.hour);
+      let date = new Date(2023, inputs.month - 1, inputs.day, inputs.hour);
       setScheduleSelected(date);
     }
   };
@@ -162,9 +162,6 @@ export default function LaboDescription() {
                     laboId={laboId}
                   ></CalendarModal>
                 </button>
-                {/* <Button size="sm" type="submit">
-                  hola
-                </Button> */}
               </form>
             </Container>
           </>

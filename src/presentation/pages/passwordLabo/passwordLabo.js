@@ -40,7 +40,7 @@ export default function LaboDescription() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
       },
-      body: JSON.stringify({ lab: 7 }), // MODIFICAR LUEGO EL labId
+      body: JSON.stringify({ lab: laboId }),
     };
     const response = await fetch(`${apiUrl}/lab/getPassword`, config);
     const data = await response.json();
