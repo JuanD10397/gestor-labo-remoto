@@ -35,7 +35,7 @@ export default function LaboDescription() {
   // La función getLabo() solo se ejecuta una vez, al cargar la página
   useEffect(() => {
     getLabo();
-  });
+  }, []);
 
   return (
     <>
