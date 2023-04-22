@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
-import Calendar from "../../components/Calendar";
-import { Button } from "react-bootstrap";
-import InputText from "../../components/InputText";
 import { useLocalState } from "../../hooks/useLocalState";
 import { apiUrl } from "../../../assets/utils/index";
-import CalendarModal from "../../components/CalendarModal/CalendarModal";
+import AddStudentToLabo from "./components/AddStudentToLabo/AddStudentToLabo";
+import RegisterSchedule from "./components/RegisterSchedule/RegisterSchedule";
 
 export default function LaboDescription() {
   const { laboId } = useParams();
 
-  const [jwt, setJwt] = useLocalState("", "jwt");
-  const [userType, setUserType] = useLocalState("", "userType");
+  const [jwt] = useLocalState("", "jwt");
+  const [userType] = useLocalState("", "userType");
   const [labo, setLabo] = useState({});
   const [loading, setLoading] = useState(true);
-  const [inputs, setInputs] = useState({});
-  const [scheduleSelected, setScheduleSelected] = useState(Date());
-  const [isModalActive, setIsModalActive] = useState(false);
   // const dispatch = useDispatch();
 
   // GET LABO by ID
@@ -40,53 +35,7 @@ export default function LaboDescription() {
   // La función getLabo() solo se ejecuta una vez, al cargar la página
   useEffect(() => {
     getLabo();
-    // Esta línea de setInputs agrega el laboId a inputs. Eso es lo que debo enviar en el body al API
-    setInputs((values) => ({ ...values, labId: laboId }));
-  }, []);
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  // DOCENTE AñADE ESTUDIANTE
-  const handleSubmitAddStudent = async (event) => {
-    event.preventDefault();
-
-    try {
-      let config = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
-        body: JSON.stringify(inputs),
-      };
-
-      let res = await fetch(`${apiUrl}/teacher/addstudent`, config);
-      let json = await res.json();
-
-      console.log("json: ", json);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // ESTUDIANTE REGISTRA HORARIO
-  const handleSubmitSelectSchedule = async (event) => {
-    event.preventDefault();
-
-    console.log(inputs);
-    if (inputs.day) {
-      //console.log(inputs);
-
-      //En Date, month va de 0 a 11. Por eso le resto 1 (si el usuario coloca 12 yo lo transformo en 11 que es diciembre)
-      let date = new Date(2023, inputs.month - 1, inputs.day, inputs.hour);
-      setScheduleSelected(date);
-    }
-  };
+  });
 
   return (
     <>
@@ -109,61 +58,12 @@ export default function LaboDescription() {
       </Container>
       {/* ESTA PARTE SOLO SE MUESTRA SI userType = teacher */}
       {userType === "teacher" ? (
-        <Container>
-          <h1>Agregar estudiante</h1>
-          <form onSubmit={handleSubmitAddStudent}>
-            <InputText
-              type="email"
-              title="Correo"
-              name="emailStudent"
-              value={inputs.emailStudent || ""}
-              onChange={handleChange}
-            />
-            <Button variant="success" type="submit">
-              Agregar
-            </Button>{" "}
-          </form>
-        </Container>
+        <AddStudentToLabo laboId={labo.lab_id} />
       ) : (
         userType === "student" && (
           <>
             {/* ESTA PARTE SOLO SE MUESTRA SI userType = student */}
-            <Container containerType="myContainer2">
-              <Calendar laboId={laboId}></Calendar>
-            </Container>
-            <Container>
-              <h1>Inscribirse en el laboratorio</h1>
-              <form onSubmit={handleSubmitSelectSchedule}>
-                <InputText
-                  type="text"
-                  title="Día"
-                  name="day"
-                  value={inputs.day || ""}
-                  onChange={handleChange}
-                />
-                <InputText
-                  type="text"
-                  title="Mes"
-                  name="month"
-                  value={inputs.month || ""}
-                  onChange={handleChange}
-                />
-                <InputText
-                  type="text"
-                  title="Hora"
-                  name="hour"
-                  value={inputs.hour || ""}
-                  onChange={handleChange}
-                />
-
-                <button type="submit" style={{ border: "none" }}>
-                  <CalendarModal
-                    scheduleSelected={scheduleSelected}
-                    laboId={laboId}
-                  ></CalendarModal>
-                </button>
-              </form>
-            </Container>
+            <RegisterSchedule />
           </>
         )
       )}

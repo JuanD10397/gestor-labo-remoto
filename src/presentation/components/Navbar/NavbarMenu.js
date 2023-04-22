@@ -38,9 +38,11 @@ export default function NavbarMenu() {
           />
         </Navbar.Brand>
         <h2 style={{ color: "white" }}>Laboratorios Remotos UNMSM</h2>
-        <Button variant="success" onClick={logOut}>
-          Cerrar sesión
-        </Button>
+        {jwt && (
+          <Button variant="success" onClick={logOut}>
+            Cerrar sesión
+          </Button>
+        )}
       </Container>
     </Navbar>
   );

@@ -82,6 +82,8 @@ export default function Calendar(props) {
       scheduleArray.push(data.schedules[i].sch_start);
     }
 
+    console.log(data.schedules);
+
     setSchedule(scheduleArray);
 
     //setLoading(false);
@@ -91,6 +93,14 @@ export default function Calendar(props) {
     getSchedule();
     //dispatch(registerScheduleAction(schedule));
   }, []);
+
+  // Cambia formato de Schedule con fecha y hora de Perú
+  // Solo lo necesito para imprimir en consola.
+  // El resto de cosas del calendario funciona bien sin necesidad de formato
+  let formatedSchedule = schedule.map(function (element) {
+    return new Date(element);
+  });
+  // console.log(formatedSchedule);
 
   return (
     <div>
