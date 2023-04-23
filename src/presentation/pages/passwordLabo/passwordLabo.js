@@ -31,7 +31,6 @@ export default function LaboDescription() {
     const response = await fetch(`${apiUrl}/lab/${laboId}`, config);
     const data = await response.json();
     setLabo(data.labs[0]);
-    setLoading(false);
   }
 
   // Get Rustdesk Password
@@ -90,6 +89,8 @@ export default function LaboDescription() {
           setStudentSchedule(data.schedules[i].sch_start);
         }
       }
+
+      setLoading(false);
     }
   }
 
@@ -105,9 +106,6 @@ export default function LaboDescription() {
     getStudentSchedule();
   }, [userComplete, labo]);
 
-  // console.log("userComplete: ", userComplete);
-  // console.log("studentSchedule: ", studentSchedule);
-
   useEffect(() => {
     if (studentSchedule) {
       const actualDate = new Date().getTime();
@@ -116,15 +114,12 @@ export default function LaboDescription() {
         studentStartDate.getTime() + 1 * 60 * 60 * 1000
       );
 
-      // console.log("studentStartDate: ", studentStartDate);
-      // console.log("studentEndddDate: ", studentEndDate);
-
       if (actualDate < studentStartDate)
         setTextSchedule("Tu horario aun no empieza");
       else if (actualDate > studentEndDate)
         setTextSchedule("Tu hora ya finalizó");
       else setTextSchedule("");
-    }
+    } else setTextSchedule("No has seleccionado horario para este laboratorio");
   }, [studentSchedule]);
 
   // Formateo schedule para que se lea mejor en pantalla
@@ -153,6 +148,7 @@ export default function LaboDescription() {
               ID: <b>{rustdeskId}</b>
             </h5>
             <div>Tu horario es: {userScheduleFormated}</div>
+
             {textSchedule ? (
               <b style={{ color: "red" }}>{textSchedule}</b>
             ) : (
