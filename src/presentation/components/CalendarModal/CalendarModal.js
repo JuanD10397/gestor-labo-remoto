@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { registerScheduleAction } from "../../../domain/actions/calendarActions";
 import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
+import { useEffect } from "react";
 
 export default function CalendarModal(props) {
   const { scheduleSelected, laboId } = props;
@@ -21,7 +22,7 @@ export default function CalendarModal(props) {
   // Corto la string del schedule para pintarla más entendible en pantalla
   // let date = scheduleSelected[scheduleSelected?.length - 1]?.substring(0, 21);
   // console.log(scheduleSelected);
-  console.log(laboId);
+  // console.log(laboId);
 
   let date = scheduleSelected.toString().substring(0, 21);
 

@@ -12,6 +12,7 @@ export default function LaboDescription() {
   const [jwt] = useLocalState("", "jwt");
   const [userType] = useLocalState("", "userType");
   const [labo, setLabo] = useState({});
+  const [userComplete, setUserComplete] = useState({});
   const [loading, setLoading] = useState(true);
   // const dispatch = useDispatch();
 
@@ -32,9 +33,26 @@ export default function LaboDescription() {
     setLoading(false);
   }
 
+  // GET COMPLETE USER DATA by jwt
+  async function getStudentComplete() {
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      // body: JSON.stringify({ type: userType }),
+    };
+    const response = await fetch(`${apiUrl}/student/tokenAuth`, config);
+    const data = await response.json();
+    setUserComplete(data.result[0]);
+  }
+
   // La función getLabo() solo se ejecuta una vez, al cargar la página
   useEffect(() => {
     getLabo();
+    getStudentComplete();
   }, []);
 
   return (
@@ -63,7 +81,7 @@ export default function LaboDescription() {
         userType === "student" && (
           <>
             {/* ESTA PARTE SOLO SE MUESTRA SI userType = student */}
-            <RegisterSchedule />
+            <RegisterSchedule studentData={userComplete} />
           </>
         )
       )}

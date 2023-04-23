@@ -10,9 +10,12 @@ export default function LaboDescription() {
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
   const [labo, setLabo] = useState({});
+  const [userComplete, setUserComplete] = useState({});
   const [loading, setLoading] = useState(true);
   const [rustdeskPassword, setRustdeskPassword] = useState("");
   const [rustdeskId, setRustdeskId] = useState("");
+  const [studentSchedule, setStudentSchedule] = useState();
+  const [textSchedule, setTextSchedule] = useState("");
 
   // GET LABO by ID
   async function getLabo() {
@@ -48,11 +51,86 @@ export default function LaboDescription() {
     setRustdeskPassword(data.labs[0].con_password);
   }
 
-  // La función getLabo() solo se ejecuta una vez, al cargar la página
+  // GET COMPLETE USER DATA by jwt
+  async function getStudentComplete() {
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    const response = await fetch(`${apiUrl}/student/tokenAuth`, config);
+    const data = await response.json();
+    setUserComplete(data.result[0]);
+  }
+
+  // Get Student Schedule
+  async function getStudentSchedule() {
+    let config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: JSON.stringify({ lab: laboId }),
+    };
+    const response = await fetch(`${apiUrl}/lab/schedules`, config);
+    const data = await response.json();
+
+    // Tomo solamente el horario del estudiante logueado en el labo específico
+    if (userComplete && labo) {
+      for (let i = 0; i < data.schedules.length; i++) {
+        if (
+          data.schedules[i].stu_id === userComplete.stu_id &&
+          data.schedules[i].lab_id === labo.lab_id
+        ) {
+          setStudentSchedule(data.schedules[i].sch_start);
+        }
+      }
+    }
+  }
+
+  // Estas funiones solo se ejecutan una vez, al cargar la página
   useEffect(() => {
     getLabo();
     getRustdeskPassword();
+    getStudentComplete();
   }, []);
+
+  // Cuando tenga el id del estudiante y del labo llamo funcion para obtener su schedule
+  useEffect(() => {
+    getStudentSchedule();
+  }, [userComplete, labo]);
+
+  // console.log("userComplete: ", userComplete);
+  // console.log("studentSchedule: ", studentSchedule);
+
+  useEffect(() => {
+    if (studentSchedule) {
+      const actualDate = new Date().getTime();
+      let studentStartDate = new Date(studentSchedule);
+      let studentEndDate = new Date(
+        studentStartDate.getTime() + 1 * 60 * 60 * 1000
+      );
+
+      // console.log("studentStartDate: ", studentStartDate);
+      // console.log("studentEndddDate: ", studentEndDate);
+
+      if (actualDate < studentStartDate)
+        setTextSchedule("Tu horario aun no empieza");
+      else if (actualDate > studentEndDate)
+        setTextSchedule("Tu hora ya finalizó");
+      else setTextSchedule("");
+    }
+  }, [studentSchedule]);
+
+  // Formateo schedule para que se lea mejor en pantalla
+  let userScheduleFormated = new Date(studentSchedule)
+    .toString()
+    .substring(0, 21);
 
   return (
     <>
@@ -74,9 +152,14 @@ export default function LaboDescription() {
             <h5>
               ID: <b>{rustdeskId}</b>
             </h5>
-            <h5>
-              Contraseña: <b>{rustdeskPassword}</b>
-            </h5>
+            <div>Tu horario es: {userScheduleFormated}</div>
+            {textSchedule ? (
+              <b style={{ color: "red" }}>{textSchedule}</b>
+            ) : (
+              <h5>
+                Contraseña: <b>{rustdeskPassword}</b>
+              </h5>
+            )}
           </>
         )}
       </Container>

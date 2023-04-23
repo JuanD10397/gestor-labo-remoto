@@ -45,6 +45,7 @@ export default function PasswordMyLabos() {
   const [labos, setLabos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Get all labos in wich student is registered
   async function getLabos() {
     let config = {
       method: "POST",
