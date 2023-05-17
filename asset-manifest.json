@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/gestor-labo-remoto/static/css/main.2b95e598.css",
+    "main.js": "/gestor-labo-remoto/static/js/main.3199981c.js",
+    "static/js/787.64017e52.chunk.js": "/gestor-labo-remoto/static/js/787.64017e52.chunk.js",
+    "static/media/unmsm.png": "/gestor-labo-remoto/static/media/unmsm.b5afc83ad18a5355b10a.png",
+    "static/media/estudiante.jpg": "/gestor-labo-remoto/static/media/estudiante.7a594fe08a93520eaf98.jpg",
+    "static/media/profesor.webp": "/gestor-labo-remoto/static/media/profesor.6e8cff040fa86aa699bf.webp",
+    "index.html": "/gestor-labo-remoto/index.html",
+    "main.2b95e598.css.map": "/gestor-labo-remoto/static/css/main.2b95e598.css.map",
+    "main.3199981c.js.map": "/gestor-labo-remoto/static/js/main.3199981c.js.map",
+    "787.64017e52.chunk.js.map": "/gestor-labo-remoto/static/js/787.64017e52.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2b95e598.css",
+    "static/js/main.3199981c.js"
+  ]
+}
