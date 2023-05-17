@@ -12,7 +12,7 @@ export default function Home() {
   const [userType] = useLocalState("", "userType");
   const [userComplete, setUserComplete] = useState({});
 
-  // Dependiendo de userType hago una petición a API de student o de teacher
+  // Dependiendo de userType hago petición a API de student o de teacher
   let urlString = "";
   if (userType === "student") urlString = "student/tokenAuth";
   else if (userType === "teacher") urlString = "teacher/tokenAuth";
