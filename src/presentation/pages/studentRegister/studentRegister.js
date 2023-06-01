@@ -4,14 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
+import MyModal from "../../components/MyModal";
 import { apiUrl } from "../../../assets/utils/index";
 
-import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
-import { useDispatch } from "react-redux";
+// import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
+// import { useDispatch } from "react-redux";
 
 export default function StudentRegister() {
   const [inputs, setInputs] = useState({});
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [modalDescription, setModalDescription] = useState("");
 
   const navigate = useNavigate(); // para redireccionar
 
@@ -50,11 +53,17 @@ export default function StudentRegister() {
       let json = await res.json();
 
       console.log("json: ", json);
-      const studentToken = json[Object.keys(json)[0]];
-      setRegisterSuccess(true);
 
+      if(!json.errors){
+        // const studentToken = json[Object.keys(json)[0]];
+        setRegisterSuccess(true);
+      }
+      else{
+        setModalDescription(
+          "La contraseña debe tener 8 o más caracteres e incluír al menos una minúscula, una mayúscula y un número");
+        setShowErrorModal(true);
+      }
       // dispatch(logginLoggoutAction({ logged: true, token: studentToken }));
-      console.log(studentToken);
     } catch (error) {
       console.log(error);
     }
@@ -98,6 +107,12 @@ export default function StudentRegister() {
           </Button>
         </form>
       </Container>
+      <MyModal 
+        show={showErrorModal} 
+        setShow={setShowErrorModal} 
+        title="Error" 
+        description={modalDescription}>
+      </MyModal>
     </>
   );
 }

@@ -6,6 +6,7 @@ import { apiUrl } from "../../../assets/utils/index";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
+import MyModal from "../../components/MyModal";
 
 import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
 import { useLocalState } from "../../hooks/useLocalState";
@@ -13,6 +14,8 @@ import { useLocalState } from "../../hooks/useLocalState";
 export default function TeacherLogin() {
   const [inputs, setInputs] = useState({});
   const [isLogged, setIsLogged] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [modalDescription, setModalDescription] = useState("");
 
   // Funciona como useState pero almacena y toma del localStorage
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -30,7 +33,7 @@ export default function TeacherLogin() {
   }, [jwt]);
 
   // inicializacion dispatch
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -56,16 +59,24 @@ export default function TeacherLogin() {
       let json = await res.json();
 
       console.log("json: ", json);
-      setJwt(json.token);
-      setUserType("teacher");
-      setIsLogged(true);
 
-      dispatch(
-        logginLoggoutAction({
-          token: jwt,
-          type: userType,
-        })
-      );
+      if(json.msg){
+        setModalDescription("Correo o contraseña incorrectos");
+        setShowErrorModal(true);
+      }
+
+      if(json.token){
+        setJwt(json.token);
+        setUserType("teacher");
+        setIsLogged(true);
+      }
+
+      // dispatch(
+      //   logginLoggoutAction({
+      //     token: jwt,
+      //     type: userType,
+      //   })
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +111,12 @@ export default function TeacherLogin() {
         </form>
       </Container>
       <Link to="/teacherRegister">Crear cuenta</Link>
+      <MyModal 
+        show={showErrorModal} 
+        setShow={setShowErrorModal} 
+        title="Error" 
+        description={modalDescription}>
+      </MyModal>
     </>
   );
 }
