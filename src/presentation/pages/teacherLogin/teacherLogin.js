@@ -56,17 +56,17 @@ export default function TeacherLogin() {
       };
 
       let res = await fetch(`${apiUrl}/teacher/login`, config);
-      let json = await res.json();
+      let data = await res.json();
 
-      console.log("json: ", json);
+      console.log("data: ", data);
 
-      if(json.msg){
+      if(data.msg){
         setModalDescription("Correo o contraseña incorrectos");
         setShowErrorModal(true);
       }
 
-      if(json.token){
-        setJwt(json.token);
+      if(data.token){
+        setJwt(data.token);
         setUserType("teacher");
         setIsLogged(true);
       }

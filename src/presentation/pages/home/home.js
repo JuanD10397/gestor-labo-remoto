@@ -11,6 +11,7 @@ export default function Home() {
   const [jwt] = useLocalState("", "jwt");
   const [userType] = useLocalState("", "userType");
   const [userComplete, setUserComplete] = useState({});
+  const [loading, setLoading] = useState(true);
 
   // Dependiendo de userType hago petición a API de student o de teacher
   let urlString = "";
@@ -31,6 +32,7 @@ export default function Home() {
     const response = await fetch(`${apiUrl}/${urlString}`, config);
     const data = await response.json();
     setUserComplete(data.result[0]);
+    setLoading(false);
   }
 
   // Solo se ejecuta una vez, al cargar la página
@@ -39,31 +41,37 @@ export default function Home() {
   }, []);
 
   return (
-    <Container>
-      <h1>Home</h1>
-      {userType === "teacher" ? (
-        <h2>Bienvenido: {userComplete.tea_name}</h2>
+    <>
+      {loading ? (
+        <>Cargando...</>
       ) : (
-        <h2>Bienvenido: {userComplete.stu_name}</h2>
-      )}
+        <Container>
+          <h1>Home</h1>
+          {userType === "teacher" ? (
+            <h2>Bienvenido: {userComplete.tea_name}</h2>
+          ) : (
+            <h2>Bienvenido: {userComplete.stu_name}</h2>
+          )}
 
-      {userType === "teacher" ? (
-        <div className="home-container">
-          <HomeButton route="/laboratories">
-            Mis Laboratorios remotos
-          </HomeButton>
-          <HomeButton route="/createlabo">Crear Laboratorio</HomeButton>
-          <HomeButton route="/horario">Horario</HomeButton>
-        </div>
-      ) : (
-        userType === "student" && (
-          <div className="home-container">
-            <HomeButton route="/laboratories">Mis Laboratorios</HomeButton>
-            <HomeButton route="/passwordlabo">Empezar Laboratorio</HomeButton>
-            <HomeButton route="/schedule">Horario</HomeButton>
-          </div>
-        )
+          {userType === "teacher" ? (
+            <div className="home-container">
+              <HomeButton route="/laboratories">
+                Mis Laboratorios remotos
+              </HomeButton>
+              <HomeButton route="/createlabo">Crear Laboratorio</HomeButton>
+              <HomeButton route="/horario">Horario</HomeButton>
+            </div>
+          ) : (
+            userType === "student" && (
+              <div className="home-container">
+                <HomeButton route="/laboratories">Mis Laboratorios</HomeButton>
+                <HomeButton route="/passwordlabo">Empezar Laboratorio</HomeButton>
+                <HomeButton route="/schedule">Horario</HomeButton>
+              </div>
+            )
+          )}
+        </Container>
       )}
-    </Container>
+    </>
   );
 }

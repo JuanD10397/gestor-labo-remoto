@@ -46,18 +46,22 @@ export default function TeacherRegister() {
       };
 
       let res = await fetch(`${apiUrl}/teacher`, config);
-      let json = await res.json();
+      let data = await res.json();
 
-      console.log("json: ", json);
+      console.log("data: ", data);
 
-      if(!json.errors){
-        // const teacherToken = json[Object.keys(json)[0]];
-        setRegisterSuccess(true);
+      if(data?.msg?.code == "ER_DUP_ENTRY"){
+        setModalDescription("El correo ya está registrado en el sistema");
+        setShowErrorModal(true);
       }
-      else{
+      else if(data.errors){
         setModalDescription(
           "La contraseña debe tener 8 o más caracteres e incluír al menos una minúscula, una mayúscula y un número");
         setShowErrorModal(true);
+      }
+      else{
+        // const studentToken = data[Object.keys(data)[0]];
+        setRegisterSuccess(true);
       }
     } catch (error) {
       console.log(error);

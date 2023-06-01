@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button } from "react-bootstrap";
 import Container from "../../components/Container";
 import InputText from "../../components/InputText";
-import { useState } from "react";
 import TextArea from "../../components/TextArea/TextArea";
+import MyModal from "../../components/MyModal";
 import { useLocalState } from "../../hooks/useLocalState";
 import { apiUrl } from "../../../assets/utils/index";
 
 export default function TeacherCreateLabo() {
+
   const [jwt, setJwt] = useLocalState("", "jwt");
   const [inputs, setInputs] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalDescription, setModalDescription] = useState("");
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -32,6 +35,11 @@ export default function TeacherCreateLabo() {
 
       let res = await fetch(`${apiUrl}/teacher/lab`, config);
       let json = await res.json();
+
+      if(json.msg){
+        setModalDescription(`Laboratorio creado: ${inputs.labTitle}`);
+        setShowModal(true);
+      }
 
       console.log("json: ", json);
     } catch (error) {
@@ -69,6 +77,12 @@ export default function TeacherCreateLabo() {
           </Button>
         </form>
       </Container>
+      <MyModal 
+        show={showModal} 
+        setShow={setShowModal} 
+        title="Creación de laboratorio" 
+        description={modalDescription}
+      />
     </>
   );
 }

@@ -50,18 +50,22 @@ export default function StudentRegister() {
       };
 
       let res = await fetch(`${apiUrl}/student`, config);
-      let json = await res.json();
+      let data = await res.json();
 
-      console.log("json: ", json);
+      console.log("data: ", data);
 
-      if(!json.errors){
-        // const studentToken = json[Object.keys(json)[0]];
-        setRegisterSuccess(true);
+      if(data?.msg?.code == "ER_DUP_ENTRY"){
+        setModalDescription("El correo ya está registrado en el sistema");
+        setShowErrorModal(true);
       }
-      else{
+      else if(data.errors){
         setModalDescription(
           "La contraseña debe tener 8 o más caracteres e incluír al menos una minúscula, una mayúscula y un número");
         setShowErrorModal(true);
+      }
+      else{
+        // const studentToken = data[Object.keys(data)[0]];
+        setRegisterSuccess(true);
       }
       // dispatch(logginLoggoutAction({ logged: true, token: studentToken }));
     } catch (error) {
