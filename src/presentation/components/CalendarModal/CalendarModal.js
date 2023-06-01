@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 // import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import InputText from "../../components/InputText";
+// import InputText from "../../components/InputText";
 import { useDispatch } from "react-redux";
 import { registerScheduleAction } from "../../../domain/actions/calendarActions";
 import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 export default function CalendarModal(props) {
   const { scheduleSelected, laboId } = props;

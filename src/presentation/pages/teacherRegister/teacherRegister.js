@@ -4,14 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 import InputText from "../../components/InputText";
 import Container from "../../components/Container";
+import MyModal from "../../components/MyModal";
 import { apiUrl } from "../../../assets/utils/index";
 
-import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
-import { useDispatch } from "react-redux";
+// import { logginLoggoutAction } from "../../../domain/actions/loggedActions";
+// import { useDispatch } from "react-redux";
 
 export default function TeacherRegister() {
   const [inputs, setInputs] = useState({});
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [modalDescription, setModalDescription] = useState("");
 
   const navigate = useNavigate(); // para redireccionar
 
@@ -46,10 +49,16 @@ export default function TeacherRegister() {
       let json = await res.json();
 
       console.log("json: ", json);
-      const teacherToken = json[Object.keys(json)[0]];
-      setRegisterSuccess(true);
 
-      console.log(teacherToken);
+      if(!json.errors){
+        // const teacherToken = json[Object.keys(json)[0]];
+        setRegisterSuccess(true);
+      }
+      else{
+        setModalDescription(
+          "La contraseña debe tener 8 o más caracteres e incluír al menos una minúscula, una mayúscula y un número");
+        setShowErrorModal(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -92,9 +101,13 @@ export default function TeacherRegister() {
             Registrar
           </Button>
         </form>
-        {/* <Button onClick={estado}>Estado</Button>
-        <Button onClick={updateLoggin}>Log</Button> */}
       </Container>
+      <MyModal 
+        show={showErrorModal} 
+        setShow={setShowErrorModal} 
+        title="Error" 
+        description={modalDescription}>
+      </MyModal>
     </>
   );
 }
