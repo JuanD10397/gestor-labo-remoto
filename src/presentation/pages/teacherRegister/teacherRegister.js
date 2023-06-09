@@ -101,7 +101,13 @@ export default function TeacherRegister() {
             value={inputs.password || ""}
             onChange={handleChange}
           />
-          <Button variant="success" type="submit">
+                    <Button
+            variant="danger"
+            onClick={() => navigate("/")}
+          >
+            Volver
+          </Button>
+          <Button variant="success" type="submit" style={{float: "right"}}>
             Registrar
           </Button>
         </form>
