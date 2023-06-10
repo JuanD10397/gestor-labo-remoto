@@ -4,6 +4,9 @@ import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
 import { apiUrl } from "../../../assets/utils/index";
 
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 export default function LaboDescription() {
   const { laboId } = useParams();
 
@@ -16,7 +19,7 @@ export default function LaboDescription() {
   const [rustdeskId, setRustdeskId] = useState("");
   const [studentSchedule, setStudentSchedule] = useState();
   const [textSchedule, setTextSchedule] = useState("");
-
+  const navigate = useNavigate(); // para redireccionar
   // GET LABO by ID
   async function getLabo() {
     let config = {
@@ -156,8 +159,12 @@ export default function LaboDescription() {
                 Contraseña: <b>{rustdeskPassword}</b>
               </h5>
             )}
+            
           </>
         )}
+        <Button variant="secondary" style={{marginTop:"15px" , display:"block"}} onClick={() => navigate("/passwordlabo")}>
+          Volver
+        </Button>
       </Container>
     </>
   );

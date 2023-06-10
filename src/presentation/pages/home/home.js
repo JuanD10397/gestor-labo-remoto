@@ -55,18 +55,28 @@ export default function Home() {
 
           {userType === "teacher" ? (
             <div className="home-container">
-              <HomeButton route="/laboratories">
+              <HomeButton route="/laboratories" imgClass="home-button-lab">
                 Mis Laboratorios remotos
-              </HomeButton>
-              <HomeButton route="/createlabo">Crear Laboratorio</HomeButton>
-              <HomeButton route="/horario">Horario</HomeButton>
+                </HomeButton>
+              <HomeButton route="/createlabo" imgClass="home-button-add">
+                Crear Laboratorio
+                </HomeButton>
+              <HomeButton route="/horario" imgClass="home-button-schedules">
+                Horario
+                </HomeButton>
             </div>
           ) : (
             userType === "student" && (
               <div className="home-container">
-                <HomeButton route="/laboratories">Mis Laboratorios</HomeButton>
-                <HomeButton route="/passwordlabo">Empezar Laboratorio</HomeButton>
-                <HomeButton route="/schedule">Horario</HomeButton>
+                <HomeButton route="/laboratories" imgClass="home-button-lab">
+                  Mis Laboratorios
+                  </HomeButton>
+                <HomeButton route="/passwordlabo" imgClass="home-button-start">
+                  Empezar Laboratorio
+                  </HomeButton>
+                <HomeButton route="/schedule" imgClass="home-button-schedules">
+                  Horario
+                  </HomeButton>
               </div>
             )
           )}

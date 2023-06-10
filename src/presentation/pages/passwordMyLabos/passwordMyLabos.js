@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import Container from "../../components/Container";
 import LaboCard from "../../components/LaboCard/LaboCard";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
@@ -41,6 +45,7 @@ export default function PasswordMyLabos() {
 
   const [jwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
+  const navigate = useNavigate(); // para redireccionar
 
   const [labos, setLabos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -83,11 +88,15 @@ export default function PasswordMyLabos() {
                 description={labo.lab_desc_short}
                 link="/passwordlabo/"
                 btnTxt="Mostrar contraseña"
+                deleteTxt="Retirarse"
               />
             );
           })
         )}
       </div>
+      <Button variant="secondary" style={{marginTop:"15px"}} onClick={() => navigate("/home")}>
+          Volver
+        </Button>
     </Container>
   );
 }

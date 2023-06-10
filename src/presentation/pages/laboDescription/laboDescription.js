@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
+
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
 import { apiUrl } from "../../../assets/utils/index";
 import AddStudentToLabo from "./components/AddStudentToLabo/AddStudentToLabo";
+import RegisteredStudents from "./components/RegisteredStudents/RegisteredStudents";
 import RegisterSchedule from "./components/RegisterSchedule/RegisterSchedule";
 
 export default function LaboDescription() {
   const { laboId } = useParams();
-
+  const navigate = useNavigate(); // para redireccionar
   const [jwt] = useLocalState("", "jwt");
   const [userType] = useLocalState("", "userType");
   const [labo, setLabo] = useState({});
@@ -71,12 +76,22 @@ export default function LaboDescription() {
               Tiempo de duración de la práctica de Laboratorio:{" "}
               <b>{labo.lab_timeNeeded}</b>
             </div>
+            <Button
+            variant="secondary"
+            style={{marginTop:"10px"}}
+            onClick={() => navigate("/laboratories")}
+          >
+            Volver
+          </Button>
           </>
         )}
       </Container>
       {/* ESTA PARTE SOLO SE MUESTRA SI userType = teacher */}
       {userType === "teacher" ? (
+        <div>
         <AddStudentToLabo laboId={labo.lab_id} />
+        <RegisteredStudents laboId={labo.lab_id} />
+        </div>
       ) : (
         userType === "student" && (
           <>

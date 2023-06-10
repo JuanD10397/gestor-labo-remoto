@@ -102,7 +102,7 @@ export default function StudentLogin() {
             onChange={handleChange}
           />
           <Button
-            variant="danger"
+            variant="secondary"
             onClick={() => navigate("/")}
             style={{"margin-right": "10px"}}
           >

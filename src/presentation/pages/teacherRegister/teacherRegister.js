@@ -101,8 +101,8 @@ export default function TeacherRegister() {
             value={inputs.password || ""}
             onChange={handleChange}
           />
-                    <Button
-            variant="danger"
+          <Button
+            variant="secondary"
             onClick={() => navigate("/")}
           >
             Volver

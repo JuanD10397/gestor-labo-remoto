@@ -1,5 +1,8 @@
 import React, {useState} from "react";
+
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import Container from "../../components/Container";
 import InputText from "../../components/InputText";
 import TextArea from "../../components/TextArea/TextArea";
@@ -14,6 +17,8 @@ export default function TeacherCreateLabo() {
   const [showModal, setShowModal] = useState(false);
   const [modalDescription, setModalDescription] = useState("");
 
+  const navigate = useNavigate(); // para redireccionar
+  
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -61,9 +66,9 @@ export default function TeacherCreateLabo() {
           />
           <InputText
             type="text"
-            title="Descripción corta"
-            name="labDescShort"
-            value={inputs.labDescShort || ""}
+            title="Objetivo"
+            name="labObjetives"
+            value={inputs.labObjetives || ""}
             onChange={handleChange}
           />
           <TextArea
@@ -72,7 +77,10 @@ export default function TeacherCreateLabo() {
             value={inputs.labDescription || ""}
             onChange={handleChange}
           />
-          <Button variant="success" type="submit">
+          <Button variant="secondary" style={{marginRight:"10px", display:"inline"}} onClick={() => navigate("/home")}>
+            Volver
+          </Button>          
+          <Button variant="success" style={{display:"inline"}} type="submit">
             Crear
           </Button>
         </form>

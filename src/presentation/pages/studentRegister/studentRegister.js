@@ -107,7 +107,7 @@ export default function StudentRegister() {
             onChange={handleChange}
           />
           <Button
-            variant="danger"
+            variant="secondary"
             onClick={() => navigate("/")}
           >
             Volver

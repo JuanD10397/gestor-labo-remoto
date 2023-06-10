@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import Container from "../../components/Container";
 import LaboCard from "../../components/LaboCard/LaboCard";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
@@ -6,6 +10,8 @@ import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
 
 import "./myLabos.scss";
+
+
 
 export default function MyLabos() {
   // DATA MOCK
@@ -45,6 +51,8 @@ export default function MyLabos() {
   const [labos, setLabos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate(); // para redireccionar
+
   async function getLabos() {
     let config = {
       method: "POST",
@@ -79,14 +87,18 @@ export default function MyLabos() {
                 laboId={labo.lab_id}
                 title={labo.lab_title}
                 image={LogoUnmsm}
-                description={labo.lab_desc_short}
+                objetives={labo.lab_objectives}
                 link="/laboratories/"
                 btnTxt="Entrar"
+                deleteTxt="Eliminar"
               />
             );
           })
         )}
       </div>
+      <Button variant="secondary" style={{marginTop:"15px"}} onClick={() => navigate("/home")}>
+          Volver
+        </Button>
     </Container>
   );
 }
