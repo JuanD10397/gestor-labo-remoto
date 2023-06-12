@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
 import { apiUrl } from "../../../assets/utils/index";
 import AddStudentToLabo from "./components/AddStudentToLabo/AddStudentToLabo";
-import RegisteredStudents from "./components/RegisteredStudents/RegisteredStudents";
+import StudentsRegisteredInLabo from "./components/StudentsRegisteredInLabo/StudentsRegisteredInLabo";
 import RegisterSchedule from "./components/RegisterSchedule/RegisterSchedule";
 
 export default function LaboDescription() {
@@ -57,14 +58,17 @@ export default function LaboDescription() {
   // La función getLabo() solo se ejecuta una vez, al cargar la página
   useEffect(() => {
     getLabo();
-    getStudentComplete();
+    if(userType==="student")
+      getStudentComplete();
   }, []);
 
   return (
     <>
       <Container>
         {loading ? (
-          <>Cargando...</>
+          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
+            <Spinner animation="border" variant="primary"/>
+          </div>
         ) : (
           <>
             <h1>{labo.lab_title}</h1>
@@ -76,7 +80,7 @@ export default function LaboDescription() {
               Tiempo de duración de la práctica de Laboratorio:{" "}
               <b>{labo.lab_timeNeeded}</b>
             </div>
-            <Button
+          <Button
             variant="secondary"
             style={{marginTop:"10px"}}
             onClick={() => navigate("/laboratories")}
@@ -90,7 +94,7 @@ export default function LaboDescription() {
       {userType === "teacher" ? (
         <div>
         <AddStudentToLabo laboId={labo.lab_id} />
-        <RegisteredStudents laboId={labo.lab_id} />
+        <StudentsRegisteredInLabo laboId={labo.lab_id} />
         </div>
       ) : (
         userType === "student" && (

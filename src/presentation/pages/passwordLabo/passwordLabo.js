@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
 import { apiUrl } from "../../../assets/utils/index";
+import Spinner from "react-bootstrap/Spinner";
 
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -134,7 +135,9 @@ export default function LaboDescription() {
     <>
       <Container>
         {loading ? (
-          <>Cargando...</>
+          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
+            <Spinner animation="border" variant="primary"/>
+          </div>
         ) : (
           <>
             <h1>{labo.lab_title}</h1>

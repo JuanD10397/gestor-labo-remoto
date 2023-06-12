@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 
 import Container from "../../components/Container";
 import LaboCard from "../../components/LaboCard/LaboCard";
@@ -74,31 +75,37 @@ export default function MyLabos() {
   }, []);
 
   return (
-    <Container fluid="xl">
-      <h1>Mis Laboratorios</h1>
-      <div className="grid-container">
-        {loading ? (
-          <>Cargando...</>
-        ) : (
-          labos?.map((labo) => {
-            return (
-              <LaboCard
-                key={labo.lab_id}
-                laboId={labo.lab_id}
-                title={labo.lab_title}
-                image={LogoUnmsm}
-                objetives={labo.lab_objectives}
-                link="/laboratories/"
-                btnTxt="Entrar"
-                deleteTxt="Eliminar"
-              />
-            );
-          })
-        )}
-      </div>
-      <Button variant="secondary" style={{marginTop:"15px"}} onClick={() => navigate("/home")}>
-          Volver
-        </Button>
-    </Container>
+    <>
+      {loading ? (
+        <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
+          <Spinner animation="border" variant="primary"/>
+        </div>
+      ) : (
+        <Container fluid="xl">
+          <h1>Mis Laboratorios</h1>
+          <div className="grid-container">
+            <>
+              {labos?.map((labo) => {
+                return (
+                  <LaboCard
+                    key={labo.lab_id}
+                    laboId={labo.lab_id}
+                    title={labo.lab_title}
+                    image={LogoUnmsm}
+                    objetives={labo.lab_objectives}
+                    link="/laboratories/"
+                    btnTxt="Entrar"
+                    deleteTxt="Eliminar"
+                  />
+                );
+              })}
+            </>  
+          </div>
+          <Button variant="secondary" style={{marginTop:"15px"}} onClick={() => navigate("/home")}>
+            Volver
+          </Button>
+        </Container>
+      )}
+    </>
   );
 }

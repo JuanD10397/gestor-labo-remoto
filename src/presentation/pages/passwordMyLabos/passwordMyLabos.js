@@ -8,6 +8,7 @@ import LaboCard from "../../components/LaboCard/LaboCard";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
 import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
+import Spinner from "react-bootstrap/Spinner";
 
 import "./passwordMyLabos.scss";
 
@@ -76,7 +77,9 @@ export default function PasswordMyLabos() {
       <h1>Solicitar contraseña de Rustdesk</h1>
       <div className="grid-container">
         {loading ? (
-          <>Cargando...</>
+          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
+            <Spinner animation="border" variant="primary"/>
+          </div>
         ) : (
           labos?.map((labo) => {
             return (
