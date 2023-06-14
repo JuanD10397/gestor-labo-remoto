@@ -12,7 +12,7 @@ import { useLocalState } from "../../hooks/useLocalState";
 
 import "./myLabos.scss";
 
-
+// Comentario x
 
 export default function MyLabos() {
   // DATA MOCK
