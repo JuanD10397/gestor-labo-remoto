@@ -36,12 +36,30 @@
   cursor: pointer;
 }
 
+//START BUTTONS
 .home-button-teacher{
   background-image: url("profesor.webp");
 }
 
 .home-button-student{
   background-image: url("estudiante.jpg");
+}
+
+//HOME BUTTONS
+.home-button-lab{
+  background-image: url("remote-lab.jpg");
+}
+
+.home-button-add{
+  background-image: url("add.png");
+}
+
+.home-button-schedules{
+  background-image: url("schedules.png");
+}
+
+.home-button-start{
+  background-image: url("start.png");
 }
 
 

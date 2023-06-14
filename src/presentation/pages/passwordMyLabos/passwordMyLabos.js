@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
+
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import Container from "../../components/Container";
 import LaboCard from "../../components/LaboCard/LaboCard";
 import LogoUnmsm from "../../../assets/img/unmsm.png";
 import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
+import Spinner from "react-bootstrap/Spinner";
 
 import "./passwordMyLabos.scss";
 
@@ -41,6 +46,7 @@ export default function PasswordMyLabos() {
 
   const [jwt] = useLocalState("", "jwt");
   const [userType, setUserType] = useLocalState("", "userType");
+  const navigate = useNavigate(); // para redireccionar
 
   const [labos, setLabos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -71,7 +77,9 @@ export default function PasswordMyLabos() {
       <h1>Solicitar contraseña de Rustdesk</h1>
       <div className="grid-container">
         {loading ? (
-          <>Cargando...</>
+          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
+            <Spinner animation="border" variant="primary"/>
+          </div>
         ) : (
           labos?.map((labo) => {
             return (
@@ -83,11 +91,15 @@ export default function PasswordMyLabos() {
                 description={labo.lab_desc_short}
                 link="/passwordlabo/"
                 btnTxt="Mostrar contraseña"
+                deleteTxt="Retirarse"
               />
             );
           })
         )}
       </div>
+      <Button variant="secondary" style={{marginTop:"15px"}} onClick={() => navigate("/home")}>
+          Volver
+        </Button>
     </Container>
   );
 }

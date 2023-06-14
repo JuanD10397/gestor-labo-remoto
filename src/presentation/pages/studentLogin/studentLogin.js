@@ -102,15 +102,28 @@ export default function StudentLogin() {
             onChange={handleChange}
           />
           <Button
+            variant="secondary"
+            onClick={() => navigate("/")}
+            style={{"margin-right": "10px"}}
+          >
+            Volver
+          </Button>
+          <Button
+            variant="outline-primary"
+            onClick={() => navigate("/studentRegister")}
+          >
+            Crear Cuenta
+          </Button>
+          <Button
             variant="success"
             type="submit"
-            // onClick={() => navigate("/home")}
+            style={{float: "right"}}
+
           >
             Ingresar
           </Button>
         </form>
       </Container>
-      <Link to="/studentRegister">Crear cuenta</Link>
       <MyModal 
         show={showErrorModal} 
         setShow={setShowErrorModal} 

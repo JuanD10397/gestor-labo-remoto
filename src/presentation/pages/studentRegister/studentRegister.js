@@ -106,8 +106,19 @@ export default function StudentRegister() {
             value={inputs.password || ""}
             onChange={handleChange}
           />
-          <Button variant="success" type="submit">
-            Registrar
+          <Button
+            variant="secondary"
+            onClick={() => navigate("/")}
+          >
+            Volver
+          </Button>
+          <Button
+            variant="success"
+            type="submit"
+            style={{float: "right"}}
+
+          >
+            Ingresar
           </Button>
         </form>
       </Container>

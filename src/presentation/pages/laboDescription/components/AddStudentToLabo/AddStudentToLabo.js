@@ -5,10 +5,11 @@ import Container from "../../../../components/Container";
 import InputText from "../../../../components/InputText";
 import MyModal from "../../../../components/MyModal";
 import { Button } from "react-bootstrap";
+import TextArea from "../../../../components/TextArea/TextArea";
 
 export default function AddStudentToLabo(props) {
   const { laboId } = props;
-  console.log("laboId: ", laboId);
+  // console.log("laboId: ", laboId);
 
   const [jwt] = useLocalState("", "jwt");
   const [inputs, setInputs] = useState({});
@@ -69,7 +70,8 @@ export default function AddStudentToLabo(props) {
   return (
     <>
       <Container>
-        <h1>Agregar estudiante</h1>
+        <h1>Agregar estudiantes</h1>
+        {/* <h5>Agregar manualmente</h5>
         <form onSubmit={handleSubmitAddStudent}>
           <InputText
             type="email"
@@ -78,6 +80,13 @@ export default function AddStudentToLabo(props) {
             value={inputs.emailStudent || ""}
             onChange={handleChange}
           />
+          <Button variant="success" type="submit">
+            Agregar
+          </Button>{" "}
+        </form> */}
+        <h5>Agregar varios</h5>
+        <form>
+          <TextArea title="Correos" rows={5} onChange={handleChange}/>
           <Button variant="success" type="submit">
             Agregar
           </Button>{" "}
