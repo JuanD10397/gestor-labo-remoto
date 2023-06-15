@@ -104,7 +104,7 @@ export default function TeacherLogin() {
           <Button
             variant="secondary"
             onClick={() => navigate("/")}
-            style={{"margin-right": "10px"}}
+            style={{"marginRight": "10px"}}
           >
             Volver
           </Button>

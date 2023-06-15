@@ -54,6 +54,7 @@ export default function MyLabos() {
 
   const navigate = useNavigate(); // para redireccionar
 
+  // GET LABOS
   async function getLabos() {
     let config = {
       method: "POST",

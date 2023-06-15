@@ -90,6 +90,7 @@ export default function TeacherCreateLabo() {
         setShow={setShowModal} 
         title="Creación de laboratorio" 
         description={modalDescription}
+        handleClick={() => navigate("/home")}
       />
     </>
   );
