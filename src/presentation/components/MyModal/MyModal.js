@@ -4,25 +4,32 @@ import Modal from "react-bootstrap/Modal";
 
 export default function MyModal(props) {
 
-  const {title, description, show, setShow} = props;
+  const {title, description, description2, show, setShow, handleClick} = props;
 
-  // const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   return (
     <>
       <Modal show={show} onHide={handleClose} centered backdrop="static">
         <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
+          <Modal.Title>
+            {title}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>{description}</p>
+          <p>
+            {description}
+          </p>
+          {description2 && 
+            <p>
+              {description2}
+            </p>
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="primary"
-            onClick={handleClose}
+            onClick={handleClick ? handleClick : handleClose}
           >
             Aceptar
           </Button>

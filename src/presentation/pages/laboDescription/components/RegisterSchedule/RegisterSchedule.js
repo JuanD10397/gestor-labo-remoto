@@ -58,6 +58,7 @@ export default function RegisterSchedule(props) {
             <InputText
               type="text"
               title="Día"
+              placeholder="12"
               name="day"
               value={inputs.day || ""}
               onChange={handleChange}
@@ -65,6 +66,7 @@ export default function RegisterSchedule(props) {
             <InputText
               type="text"
               title="Mes"
+              placeholder="5"
               name="month"
               value={inputs.month || ""}
               onChange={handleChange}
@@ -72,6 +74,7 @@ export default function RegisterSchedule(props) {
             <InputText
               type="text"
               title="Hora"
+              placeholder="22"
               name="hour"
               value={inputs.hour || ""}
               onChange={handleChange}

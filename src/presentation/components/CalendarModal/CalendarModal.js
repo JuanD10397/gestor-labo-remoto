@@ -45,6 +45,7 @@ export default function CalendarModal(props) {
     } catch (error) {
       console.log(error);
     }
+    window.location.reload();
   };
 
   return (
@@ -58,7 +59,7 @@ export default function CalendarModal(props) {
           <Modal.Title>Reserva de horario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Deseas inscribirte en el horario?</h4>
+          <h4>¿Deseas inscribirte en el horario?</h4>
           <p>{date}</p>
         </Modal.Body>
         <Modal.Footer>
@@ -70,7 +71,6 @@ export default function CalendarModal(props) {
             onClick={() => {
               dispatch(registerScheduleAction(scheduleSelected));
               handleSubmitRegisterSchedule();
-              handleClose();
             }}
           >
             Registrar
