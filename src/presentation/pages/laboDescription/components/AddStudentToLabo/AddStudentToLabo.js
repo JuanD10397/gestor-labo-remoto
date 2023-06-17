@@ -25,7 +25,7 @@ export default function AddStudentToLabo(props) {
     setInputs((values) => ({ ...values, labId: laboId }));
   };
 
-  console.log("inputs: ", inputs);
+  // console.log("inputs: ", inputs);
 
   // DOCENTE AñADE ESTUDIANTE A LABORATORIO
   const handleSubmitAddStudent = async (event) => {
@@ -47,24 +47,30 @@ export default function AddStudentToLabo(props) {
 
       console.log("json: ", json);
 
+      const getRepeatedEmail = () => {
+        return json.msg.sqlMessage.split("'")[1].split("-")[1];
+      }
+
       if(json.msg.code == "ER_DUP_ENTRY"){
+        const repeatedEmail = getRepeatedEmail();
         setTitleModal("Error")
-        setModalDescription("Estudiante ya está agregado al laboratorio");
+        setModalDescription(`${repeatedEmail} ya está agregado al laboratorio. Borra su correo y vuelve a intentar`);
         setShowModal(true);
       }
-      else if(json.msg == "Student email not found"){
-        setTitleModal("Error")
-        setModalDescription("Correo de estudiante no registrado en el sistema");
-        setShowModal(true);
-      }
+      // else if(json.msg == "Student email not found"){
+      //   setTitleModal("Error")
+      //   setModalDescription("Correo de estudiante no registrado en el sistema");
+      //   setShowModal(true);
+      // }
       else {
-        setTitleModal("Agregar estudiante")
-        setModalDescription("Estudiante agregado correctamente");
+        setTitleModal("Agregar estudiantes")
+        setModalDescription("Estudiantes agregados correctamente");
         setShowModal(true);
       }
     } catch (error) {
       console.log(error);
     }
+    // window.location.reload();
   };
 
   return (
@@ -85,8 +91,16 @@ export default function AddStudentToLabo(props) {
           </Button>{" "}
         </form> */}
         <h5>Agregar varios</h5>
-        <form>
-          <TextArea title="Correos" rows={5} onChange={handleChange}/>
+        <form onSubmit={handleSubmitAddStudent}>
+          <TextArea 
+            id="email"
+            type="email"
+            title="Correos" 
+            rows={5} 
+            name="emailStudent" 
+            value={inputs.emailStudent || ""} 
+            onChange={handleChange}
+          />
           <Button variant="success" type="submit">
             Agregar
           </Button>{" "}

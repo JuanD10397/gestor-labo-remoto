@@ -12,8 +12,6 @@ import { useLocalState } from "../../hooks/useLocalState";
 
 import "./myLabos.scss";
 
-// Comentario x
-
 export default function MyLabos() {
   // DATA MOCK
 
@@ -96,7 +94,7 @@ export default function MyLabos() {
                     objetives={labo.lab_objectives}
                     link="/laboratories/"
                     btnTxt="Entrar"
-                    deleteTxt="Eliminar"
+                    deleteTxt={userType==="teacher" ? "Eliminar" : "Retirarse"}
                   />
                 );
               })}

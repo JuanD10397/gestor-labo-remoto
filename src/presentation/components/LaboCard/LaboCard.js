@@ -63,7 +63,8 @@ function LaboCard(props) {
       <MyModal 
           show={showModalLaboDeleted} 
           setShow={setShowModalLaboDeleted} 
-          title="¿Desea eliminar el laboratorio?"
+          title={userType==="docente" ? 
+            "¿Desea eliminar el laboratorio?" : "¿Deseas retirarte del laboratorio?"}
           description={title}
           description2={`ID: ${laboId}`}
           handleClick={() => handleDeleteLabo()}
