@@ -45,6 +45,7 @@ export default function CalendarModal(props) {
     } catch (error) {
       console.log(error);
     }
+    window.location.reload();
   };
 
   return (
@@ -70,7 +71,6 @@ export default function CalendarModal(props) {
             onClick={() => {
               dispatch(registerScheduleAction(scheduleSelected));
               handleSubmitRegisterSchedule();
-              window.location.reload();
             }}
           >
             Registrar
