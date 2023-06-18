@@ -4,6 +4,7 @@ import Container from "../../../../components/Container";
 import InputText from "../../../../components/InputText";
 import Calendar from "../../../../components/Calendar/Calendar";
 import CalendarModal from "../../../../components/CalendarModal/CalendarModal";
+import { useDateFormat } from "../../../../hooks/useDateFormat";
 
 export default function RegisterSchedule(props) {
   const { studentData } = props;
@@ -35,7 +36,7 @@ export default function RegisterSchedule(props) {
   };
 
   // Formateo schedule para que se lea mejor en pantalla
-  let userScheduleFormated = new Date(userSchedule).toString().substring(0, 21);
+  let userScheduleFormated = useDateFormat(new Date(userSchedule));
 
   return (
     <>

@@ -1,5 +1,5 @@
-import ScheduleSelector from "react-schedule-selector";
 import React, { useState, useEffect } from "react";
+import ScheduleSelector from "react-schedule-selector"; // https://github.com/bibekg/react-schedule-selector
 import { useSelector } from "react-redux";
 import CalendarModal from "../CalendarModal/CalendarModal";
 import { apiUrl } from "../../../assets/utils/index";
@@ -127,6 +127,7 @@ export default function Calendar(props) {
         maxTime={24}
         hourlyChunks={1}
         dateFormat="ddd D/M"
+        timeFormat="H:mm"
         // startDate="2023-04-10"
         // onChange={handleChange}
       />

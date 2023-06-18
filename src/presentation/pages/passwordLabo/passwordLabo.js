@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
+import { useDateFormat } from "../../hooks/useDateFormat";
 import { apiUrl } from "../../../assets/utils/index";
 import { useNavigate } from "react-router-dom";
 
@@ -131,9 +132,7 @@ export default function LaboDescription() {
   }, [studentSchedule]);
 
   // Formateo schedule para que se lea mejor en pantalla
-  let userScheduleFormated = new Date(studentSchedule)
-    .toString()
-    .substring(0, 21);
+  let userScheduleFormated = useDateFormat(new Date(studentSchedule));
 
   // Función para copiar la contraseña
   function copyTextFunction() {
@@ -166,10 +165,12 @@ export default function LaboDescription() {
               <b>{labo.lab_timeNeeded}</b>
             </div>
             <br></br>
-            <h5>
-              ID: <b>{rustdeskId}</b>
-            </h5>
-            <div>Tu horario es: {userScheduleFormated}</div>
+            <div>
+              ID de Rustdesk: <b>{rustdeskId}</b>
+            </div>
+            <div>
+              Horario para la conexión: <b>{userScheduleFormated}</b>
+            </div>
 
             <br />
 
