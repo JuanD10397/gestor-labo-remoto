@@ -15,6 +15,36 @@ export default function RegisterSchedule(props) {
   const [scheduleSelected, setScheduleSelected] = useState(Date());
   const [userSchedule, setUserSchedule] = useState();
 
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  // async function getSchedule() {
+  //   let config = {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${jwt}`,
+  //     },
+  //     body: JSON.stringify({ lab: laboId }),
+  //   };
+  //   const response = await fetch(`${apiUrl}/lab/schedules`, config);
+  //   const data = await response.json();
+  //   //console.log(data.schedules[0].sch_start);
+  //   let scheduleStartTimeArray = [];
+
+  //   // Recorro todos los schdules registrados en la BD y los guardo en arreglo
+  //   for (let i = 0; i < data.schedules.length; i++) {
+  //     //console.log(data.schedules[i].sch_start);
+  //     scheduleStartTimeArray.push(data.schedules[i].sch_start);
+  //   }
+
+  //   setScheduleComplete(data.schedules);
+  //   setScheduleStartTime(scheduleStartTimeArray);
+
+  //   //setLoading(false);
+  // }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   // ESTUDIANTE REGISTRA HORARIO
   const handleSubmitSelectSchedule = async (event) => {
     event.preventDefault();
@@ -50,7 +80,7 @@ export default function RegisterSchedule(props) {
           laboId={laboId}
           setUserSchedule={setUserSchedule}
           studentData={studentData}
-        ></Calendar>
+        />
       </Container>
       {!userSchedule && (
         <Container>
@@ -86,7 +116,7 @@ export default function RegisterSchedule(props) {
                 scheduleSelected={scheduleSelected}
                 laboId={laboId}
                 // isScheduled={isScheduled}
-              ></CalendarModal>
+              />
             </button>
           </form>
         </Container>

@@ -14,8 +14,6 @@ export default function Calendar(props) {
 
   //const calendar = useSelector((state) => state.calendar); ////////////////////////////////////////////////////// DESCOMENTAR
 
-  // console.log(calendar.stateSchedule);
-
   // const [schedule, setSchedule] = useState([]);
   // const [oldSchedule, setOldSchedule] = useState([]);
 
