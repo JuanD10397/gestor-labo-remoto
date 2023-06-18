@@ -61,23 +61,21 @@ export default function LaboDescription() {
     if (userType === "student") getStudentComplete();
   }, []);
 
-  console.log("labo: ", labo);
-
   return (
     <>
-      <Container>
-        {loading ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "20px",
-            }}
-          >
-            <Spinner animation="border" variant="primary" />
-          </div>
-        ) : (
-          <>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <>
+          <Container>
             <h1>{labo.lab_title}</h1>
             <div>Labo numero {laboId}</div>
             <br></br>
@@ -94,22 +92,22 @@ export default function LaboDescription() {
             >
               Volver
             </Button>
-          </>
-        )}
-      </Container>
-      {/* ESTA PARTE SOLO SE MUESTRA SI userType = teacher */}
-      {userType === "teacher" ? (
-        <div>
-          <AddStudentToLabo laboId={labo.lab_id} />
-          <StudentsRegisteredInLabo laboId={labo.lab_id} />
-        </div>
-      ) : (
-        userType === "student" && (
-          <>
-            {/* ESTA PARTE SOLO SE MUESTRA SI userType = student */}
-            <RegisterSchedule studentData={userComplete} />
-          </>
-        )
+          </Container>
+          {/* ESTA PARTE SOLO SE MUESTRA SI userType = teacher */}
+          {userType === "teacher" ? (
+            <div>
+              <AddStudentToLabo laboId={labo.lab_id} />
+              <StudentsRegisteredInLabo laboId={labo.lab_id} />
+            </div>
+          ) : (
+            userType === "student" && (
+              <>
+                {/* ESTA PARTE SOLO SE MUESTRA SI userType = student */}
+                <RegisterSchedule studentData={userComplete} />
+              </>
+            )
+          )}
+        </>
       )}
     </>
   );
