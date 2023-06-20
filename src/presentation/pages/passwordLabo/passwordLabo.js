@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import { useLocalState } from "../../hooks/useLocalState";
+import { useDateFormat } from "../../hooks/useDateFormat";
 import { apiUrl } from "../../../assets/utils/index";
-import Spinner from "react-bootstrap/Spinner";
-
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
+import Spinner from "react-bootstrap/Spinner";
+import Accordion from "react-bootstrap/Accordion";
+import { Button } from "react-bootstrap";
+
+import "./passwordLabo.scss";
 
 export default function LaboDescription() {
   const { laboId } = useParams();
@@ -21,6 +25,7 @@ export default function LaboDescription() {
   const [studentSchedule, setStudentSchedule] = useState();
   const [textSchedule, setTextSchedule] = useState("");
   const navigate = useNavigate(); // para redireccionar
+
   // GET LABO by ID
   async function getLabo() {
     let config = {
@@ -127,16 +132,26 @@ export default function LaboDescription() {
   }, [studentSchedule]);
 
   // Formateo schedule para que se lea mejor en pantalla
-  let userScheduleFormated = new Date(studentSchedule)
-    .toString()
-    .substring(0, 21);
+  let userScheduleFormated = useDateFormat(new Date(studentSchedule));
+
+  // Función para copiar la contraseña
+  function copyTextFunction() {
+    var copyText = rustdeskPassword;
+    navigator.clipboard.writeText(copyText);
+  }
 
   return (
     <>
       <Container>
         {loading ? (
-          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
-            <Spinner animation="border" variant="primary"/>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
+          >
+            <Spinner animation="border" variant="primary" />
           </div>
         ) : (
           <>
@@ -150,22 +165,71 @@ export default function LaboDescription() {
               <b>{labo.lab_timeNeeded}</b>
             </div>
             <br></br>
-            <h5>
-              ID: <b>{rustdeskId}</b>
-            </h5>
-            <div>Tu horario es: {userScheduleFormated}</div>
+            <div>
+              ID de Rustdesk: <b>{rustdeskId}</b>
+            </div>
+            <div>
+              Horario para la conexión: <b>{userScheduleFormated}</b>
+            </div>
+
+            <br />
+
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>
+                  Instrucciones para realizar la conexión
+                </Accordion.Header>
+                <Accordion.Body>
+                  <ul>
+                    <li>
+                      Solo podrás realizar la conexión durante tu horario
+                      registrado
+                    </li>
+                    <li>
+                      Abre el programa de conexión de escritorio remoto{" "}
+                      <a href="https://rustdesk.com/" target="_blank">
+                        Rustdesk
+                      </a>
+                    </li>
+                    <li>Copia el ID de conexión del laboratorio</li>
+                    <li>Pega el ID de conexión en Rustdesk</li>
+                    <li>Copia la contraseña</li>
+                    <li>En Rustdesk da click en el botón Connect</li>
+                    <li>Pega la contraseña y da click en OK</li>
+                  </ul>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
 
             {textSchedule ? (
-              <b style={{ color: "red" }}>{textSchedule}</b>
+              <>
+                <br />
+                <b style={{ color: "red" }}>{textSchedule}</b>
+              </>
             ) : (
-              <h5>
-                Contraseña: <b>{rustdeskPassword}</b>
-              </h5>
+              <>
+                <br />
+                <h5>
+                  Contraseña: <b>{rustdeskPassword}</b>
+                  <span style={{ marginLeft: "10px" }}>
+                    <Button
+                      variant="primary"
+                      onClick={() => copyTextFunction()}
+                    >
+                      Copiar
+                    </Button>
+                  </span>
+                </h5>
+                <p>En caso la contraseña sea incorrecta recarga la página</p>
+              </>
             )}
-            
           </>
         )}
-        <Button variant="secondary" style={{marginTop:"15px" , display:"block"}} onClick={() => navigate("/passwordlabo")}>
+        <Button
+          variant="secondary"
+          style={{ marginTop: "15px", display: "block" }}
+          onClick={() => navigate("/passwordlabo")}
+        >
           Volver
         </Button>
       </Container>
