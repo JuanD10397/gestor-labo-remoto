@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { registerScheduleAction } from "../../../domain/actions/calendarActions";
 import { apiUrl } from "../../../assets/utils/index";
 import { useLocalState } from "../../hooks/useLocalState";
+import { useDateFormat } from "../../hooks/useDateFormat";
 // import { useEffect } from "react";
 
 export default function CalendarModal(props) {
@@ -19,12 +20,8 @@ export default function CalendarModal(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // Corto la string del schedule para pintarla más entendible en pantalla
-  // let date = scheduleSelected[scheduleSelected?.length - 1]?.substring(0, 21);
-  // console.log(scheduleSelected);
-  // console.log(laboId);
-
-  let date = scheduleSelected.toString().substring(0, 21);
+  // Uso hook para formatear el string schedule para pintarla más entendible en pantalla y en español
+  let date = useDateFormat(scheduleSelected);
 
   const handleSubmitRegisterSchedule = async (event) => {
     try {
@@ -45,6 +42,7 @@ export default function CalendarModal(props) {
     } catch (error) {
       console.log(error);
     }
+    window.location.reload();
   };
 
   return (
@@ -58,7 +56,7 @@ export default function CalendarModal(props) {
           <Modal.Title>Reserva de horario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Deseas inscribirte en el horario?</h4>
+          <h4>¿Deseas inscribirte en el horario?</h4>
           <p>{date}</p>
         </Modal.Body>
         <Modal.Footer>
@@ -70,7 +68,6 @@ export default function CalendarModal(props) {
             onClick={() => {
               dispatch(registerScheduleAction(scheduleSelected));
               handleSubmitRegisterSchedule();
-              handleClose();
             }}
           >
             Registrar

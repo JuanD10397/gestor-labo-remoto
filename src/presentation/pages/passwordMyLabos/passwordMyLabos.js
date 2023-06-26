@@ -73,33 +73,45 @@ export default function PasswordMyLabos() {
   }, []);
 
   return (
-    <Container fluid="xl">
-      <h1>Solicitar contraseña de Rustdesk</h1>
-      <div className="grid-container">
-        {loading ? (
-          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
-            <Spinner animation="border" variant="primary"/>
+    <>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <Container fluid="xl">
+          <h1>Solicitar contraseña de Rustdesk</h1>
+          <div className="grid-container">
+            {labos?.map((labo) => {
+              return (
+                <LaboCard
+                  key={labo.lab_id}
+                  laboId={labo.lab_id}
+                  title={labo.lab_title}
+                  image={LogoUnmsm}
+                  description={labo.lab_desc_short}
+                  link="/passwordlabo/"
+                  btnTxt="Mostrar contraseña"
+                  deleteTxt="Retirarse"
+                />
+              );
+            })}
           </div>
-        ) : (
-          labos?.map((labo) => {
-            return (
-              <LaboCard
-                key={labo.lab_id}
-                laboId={labo.lab_id}
-                title={labo.lab_title}
-                image={LogoUnmsm}
-                description={labo.lab_desc_short}
-                link="/passwordlabo/"
-                btnTxt="Mostrar contraseña"
-                deleteTxt="Retirarse"
-              />
-            );
-          })
-        )}
-      </div>
-      <Button variant="secondary" style={{marginTop:"15px"}} onClick={() => navigate("/home")}>
-          Volver
-        </Button>
-    </Container>
+          <Button
+            variant="secondary"
+            style={{ marginTop: "15px" }}
+            onClick={() => navigate("/home")}
+          >
+            Volver
+          </Button>
+        </Container>
+      )}
+    </>
   );
 }

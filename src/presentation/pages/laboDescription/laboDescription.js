@@ -58,19 +58,24 @@ export default function LaboDescription() {
   // La función getLabo() solo se ejecuta una vez, al cargar la página
   useEffect(() => {
     getLabo();
-    if(userType==="student")
-      getStudentComplete();
+    if (userType === "student") getStudentComplete();
   }, []);
 
   return (
     <>
-      <Container>
-        {loading ? (
-          <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
-            <Spinner animation="border" variant="primary"/>
-          </div>
-        ) : (
-          <>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <>
+          <Container>
             <h1>{labo.lab_title}</h1>
             <div>Labo numero {laboId}</div>
             <br></br>
@@ -80,29 +85,29 @@ export default function LaboDescription() {
               Tiempo de duración de la práctica de Laboratorio:{" "}
               <b>{labo.lab_timeNeeded}</b>
             </div>
-          <Button
-            variant="secondary"
-            style={{marginTop:"10px"}}
-            onClick={() => navigate("/laboratories")}
-          >
-            Volver
-          </Button>
-          </>
-        )}
-      </Container>
-      {/* ESTA PARTE SOLO SE MUESTRA SI userType = teacher */}
-      {userType === "teacher" ? (
-        <div>
-        <AddStudentToLabo laboId={labo.lab_id} />
-        <StudentsRegisteredInLabo laboId={labo.lab_id} />
-        </div>
-      ) : (
-        userType === "student" && (
-          <>
-            {/* ESTA PARTE SOLO SE MUESTRA SI userType = student */}
-            <RegisterSchedule studentData={userComplete} />
-          </>
-        )
+            <Button
+              variant="secondary"
+              style={{ marginTop: "10px" }}
+              onClick={() => navigate("/laboratories")}
+            >
+              Volver
+            </Button>
+          </Container>
+          {/* ESTA PARTE SOLO SE MUESTRA SI userType = teacher */}
+          {userType === "teacher" ? (
+            <div>
+              <AddStudentToLabo laboId={labo.lab_id} />
+              <StudentsRegisteredInLabo laboId={labo.lab_id} />
+            </div>
+          ) : (
+            userType === "student" && (
+              <>
+                {/* ESTA PARTE SOLO SE MUESTRA SI userType = student */}
+                <RegisterSchedule studentData={userComplete} />
+              </>
+            )
+          )}
+        </>
       )}
     </>
   );
