@@ -21,22 +21,15 @@ export default function StudentsRegisteredInLabo(props) {
       horario: "8pm",
     },
     {
-      nombre: "",
-      apellido: "",
-      correo: "adrian@gmail.com",
-      horario: "",
+      correo: "adrian@gmail.com"
     },
     {
       nombre: "Emily",
       apellido: "Mariño",
-      correo: "Emily@gmail.com",
-      horario: "",
+      correo: "Emily@gmail.com"
     },
     {
-      nombre: "",
-      apellido: "",
-      correo: "elvis@gmail.com",
-      horario: "",
+      correo: "elvis@gmail.com"
     },
   ]);
 

@@ -25,12 +25,12 @@ export default function AddStudentToLabo(props) {
     setInputs((values) => ({ ...values, labId: laboId }));
   };
 
-  console.log("inputs: ", inputs);
 
   // DOCENTE AñADE ESTUDIANTE A LABORATORIO
   const handleSubmitAddStudent = async (event) => {
     event.preventDefault();
 
+    console.log("inputs: ", inputs);
     try {
       let config = {
         method: "POST",
@@ -85,8 +85,8 @@ export default function AddStudentToLabo(props) {
           </Button>{" "}
         </form> */}
         <h5>Agregar varios</h5>
-        <form>
-          <TextArea title="Correos" rows={5} onChange={handleChange}/>
+        <form onSubmit={handleSubmitAddStudent}>
+          <TextArea name="emailStudent" title="Correos" rows={5} onChange={handleChange}/>
           <Button variant="success" type="submit">
             Agregar
           </Button>{" "}
