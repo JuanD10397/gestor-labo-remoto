@@ -31,6 +31,7 @@ export default function AddStudentToLabo(props) {
   const handleSubmitAddStudent = async (event) => {
     event.preventDefault();
 
+    console.log("inputs: ", inputs);
     try {
       let config = {
         method: "POST",

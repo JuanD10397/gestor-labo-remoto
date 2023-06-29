@@ -77,9 +77,10 @@ export default function Home() {
                 <HomeButton route="/passwordlabo" imgClass="home-button-start">
                   Empezar Laboratorio
                   </HomeButton>
-                <HomeButton route="/schedule" imgClass="home-button-schedules">
-                  Horario
-                  </HomeButton>
+                <a href="https://rustdesk.com/">
+                  <div className={"home-button-redirect"}>Descarga Rustdesk</div>
+                </a>
+   
               </div>
             )
           )}
