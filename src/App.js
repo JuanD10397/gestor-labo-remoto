@@ -31,14 +31,6 @@ export default function App() {
         <Route path="/teacherLogin" element={<TeacherLogin />} />
         <Route path="/studentLogin" element={<StudentLogin />} />
         <Route
-          path="/horario"
-          element={
-            <PrivateRoute>
-              <Schedule />
-            </PrivateRoute>
-          }
-        />
-        <Route
           path="/home"
           element={
             <PrivateRoute>

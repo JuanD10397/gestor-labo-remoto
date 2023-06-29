@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useLocalState } from "../../../../hooks/useLocalState";
 import { apiUrl } from "../../../../../assets/utils";
 import Container from "../../../../components/Container";
-import InputText from "../../../../components/InputText";
 import MyModal from "../../../../components/MyModal";
 import { Button } from "react-bootstrap";
 import TextArea from "../../../../components/TextArea/TextArea";
@@ -52,7 +51,7 @@ export default function AddStudentToLabo(props) {
         return json.msg.sqlMessage.split("'")[1].split("-")[1];
       };
 
-      if (json.msg.code == "ER_DUP_ENTRY") {
+      if (json.msg.code === "ER_DUP_ENTRY") {
         const repeatedEmail = getRepeatedEmail();
         setTitleModal("Error");
         setModalDescription(
