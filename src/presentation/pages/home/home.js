@@ -44,8 +44,14 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <div style={{display:"flex", justifyContent:"center", marginTop: "20px"}}>
-          <Spinner animation="border" variant="primary"/>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Spinner animation="border" variant="primary" />
         </div>
       ) : (
         <Container>
@@ -60,27 +66,29 @@ export default function Home() {
             <div className="home-container">
               <HomeButton route="/laboratories" imgClass="home-button-lab">
                 Mis Laboratorios remotos
-                </HomeButton>
+              </HomeButton>
               <HomeButton route="/createlabo" imgClass="home-button-add">
                 Crear Laboratorio
-                </HomeButton>
-              <HomeButton route="/horario" imgClass="home-button-schedules">
-                Horario
-                </HomeButton>
+              </HomeButton>
             </div>
           ) : (
             userType === "student" && (
               <div className="home-container">
                 <HomeButton route="/laboratories" imgClass="home-button-lab">
                   Mis Laboratorios
-                  </HomeButton>
+                </HomeButton>
                 <HomeButton route="/passwordlabo" imgClass="home-button-start">
                   Empezar Laboratorio
-                  </HomeButton>
-                <a href="https://rustdesk.com/">
-                  <div className={"home-button-redirect"}>Descarga Rustdesk</div>
+                </HomeButton>
+                <a
+                  href="https://rustdesk.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div className={"home-button-redirect"}>
+                    Descarga Rustdesk
+                  </div>
                 </a>
-   
               </div>
             )
           )}
