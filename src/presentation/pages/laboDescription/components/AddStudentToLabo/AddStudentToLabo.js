@@ -9,6 +9,7 @@ import TextArea from "../../../../components/TextArea/TextArea";
 export default function AddStudentToLabo(props) {
   const { laboId } = props;
   // console.log("laboId: ", laboId);
+  // comment
 
   const [jwt] = useLocalState("", "jwt");
   const [inputs, setInputs] = useState({});
