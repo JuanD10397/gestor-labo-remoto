@@ -9,6 +9,7 @@ import TextArea from "../../../../components/TextArea/TextArea";
 export default function AddStudentToLabo(props) {
   const { laboId } = props;
   // console.log("laboId: ", laboId);
+  // comment
 
   const [jwt] = useLocalState("", "jwt");
   const [inputs, setInputs] = useState({});
@@ -79,19 +80,6 @@ export default function AddStudentToLabo(props) {
     <>
       <Container>
         <h1>Agregar estudiantes</h1>
-        {/* <h5>Agregar manualmente</h5>
-        <form onSubmit={handleSubmitAddStudent}>
-          <InputText
-            type="email"
-            title="Correo"
-            name="emailStudent"
-            value={inputs.emailStudent || ""}
-            onChange={handleChange}
-          />
-          <Button variant="success" type="submit">
-            Agregar
-          </Button>{" "}
-        </form> */}
         <h5>Agregar varios</h5>
         <form onSubmit={handleSubmitAddStudent}>
           <TextArea
