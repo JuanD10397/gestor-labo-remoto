@@ -18,7 +18,7 @@ function LaboCard(props) {
 
   // Link al que redirigirá cada LaboCard
   const linkTo = link + laboId;
-  
+
   const navigate = useNavigate(); // para redireccionar
 
   // DELETE LABOS
@@ -37,8 +37,10 @@ function LaboCard(props) {
     console.log("data: ", data);
 
     // Recargo la página
-    window.location.reload()
+    window.location.reload();
   }
+
+  console.log("userType", userType);
 
   return (
     <>
@@ -51,23 +53,26 @@ function LaboCard(props) {
           <Link to={linkTo}>
             <Button variant="primary">{btnTxt}</Button>
           </Link>
-          <span style={{padding: "10px"}}/>
-          <Button 
-            variant="danger" 
+          <span style={{ padding: "10px" }} />
+          <Button
+            variant="danger"
             onClick={() => setShowModalLaboDeleted(true)}
           >
             {deleteTxt}
           </Button>
         </Card.Body>
       </Card>
-      <MyModal 
-          show={showModalLaboDeleted} 
-          setShow={setShowModalLaboDeleted} 
-          title={userType==="docente" ? 
-            "¿Desea eliminar el laboratorio?" : "¿Deseas retirarte del laboratorio?"}
-          description={title}
-          description2={`ID: ${laboId}`}
-          handleClick={() => handleDeleteLabo()}
+      <MyModal
+        show={showModalLaboDeleted}
+        setShow={setShowModalLaboDeleted}
+        title={
+          userType === "teacher"
+            ? "¿Desea eliminar el laboratorio?"
+            : "¿Deseas retirarte del laboratorio?"
+        }
+        description={title}
+        description2={`ID: ${laboId}`}
+        handleClick={() => handleDeleteLabo()}
       />
     </>
   );

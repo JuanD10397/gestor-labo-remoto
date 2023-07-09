@@ -35,7 +35,7 @@ function useDateFormat(schedule) {
       dayName = "Domingo";
       break;
     default:
-      dayName = "Lunes";
+      dayName = "";
   }
 
   switch (month) {
@@ -76,7 +76,7 @@ function useDateFormat(schedule) {
       month = "Diciembre";
       break;
     default:
-      month = "Enero";
+      month = "";
   }
 
   return dayName + " " + day + " " + month + " " + year + " " + hour;
