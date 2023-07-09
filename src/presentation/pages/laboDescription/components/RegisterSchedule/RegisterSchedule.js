@@ -123,7 +123,7 @@ export default function RegisterSchedule(props) {
           </Container>
           {!userSchedule && (
             <Container>
-              <h1>Inscribirse en el laboratorio</h1>
+              <h1>Elegir horario para el laboratorio</h1>
               <form onSubmit={handleSubmitSelectSchedule}>
                 <InputText
                   type="text"
@@ -165,56 +165,3 @@ export default function RegisterSchedule(props) {
     </>
   );
 }
-
-// {userSchedule && (
-//   <Container>
-//     El horario elegido es: <b>{userScheduleFormated}</b>
-//   </Container>
-// )}
-// <Container containerType="myContainer2">
-//   <Calendar
-//     laboId={laboId}
-//     setUserSchedule={setUserSchedule}
-//     studentData={studentData}
-//     setLoading={setLoading}
-//   />
-// </Container>
-// {!userSchedule && (
-//   <Container>
-//     <h1>Inscribirse en el laboratorio</h1>
-//     <form onSubmit={handleSubmitSelectSchedule}>
-//       <InputText
-//         type="text"
-//         title="Día"
-//         placeholder="12"
-//         name="day"
-//         value={inputs.day || ""}
-//         onChange={handleChange}
-//       />
-//       <InputText
-//         type="text"
-//         title="Mes"
-//         placeholder="5"
-//         name="month"
-//         value={inputs.month || ""}
-//         onChange={handleChange}
-//       />
-//       <InputText
-//         type="text"
-//         title="Hora"
-//         placeholder="22"
-//         name="hour"
-//         value={inputs.hour || ""}
-//         onChange={handleChange}
-//       />
-
-//       <button type="submit" style={{ border: "none" }}>
-//         <CalendarModal
-//           scheduleSelected={scheduleSelected}
-//           laboId={laboId}
-//           // isScheduled={isScheduled}
-//         />
-//       </button>
-//     </form>
-//   </Container>
-// )}
